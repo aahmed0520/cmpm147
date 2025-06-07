@@ -9,8 +9,7 @@ const fillers = {
   souvenir: ["transdimensional pollen", "fractal coin", "liquid magnet souvenir", "glowing antimatter trinket"]
 };
 
-const template = `
-Welcome to $planetName!
+const template = `Welcome to $planetName!
 
 Experience the $attraction of this $worldType, home to the $creature.
 
