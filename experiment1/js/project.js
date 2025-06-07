@@ -10,12 +10,9 @@ const fillers = {
 };
 
 const template = `
-Welcome to $planetName!
-
-Experience the $attraction of this $worldType, home to the $creature.
-
-Our local guides will escort you via $transport to the $landmark, where you can witness a live $event.
-
+Welcome to $planetName!<br><br>
+Experience the $attraction of this $worldType, home to the $creature.<br><br>
+Our local guides will escort you via $transport to the $landmark, where you can witness a live $event.<br><br>
 Book now and receive a free vial of $souvenir!
 `;
 
