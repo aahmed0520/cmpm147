@@ -32,7 +32,7 @@
 	<main id="content">
 		<section>
 
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment 2 - Living Expression/Aurora Farm</h1>
 
 			<div class="minor-section">
 				<div id="canvas-container">
@@ -42,20 +42,24 @@
                     <button id="toggle-fullscreen">Fullscreen</button>
                 </div>
 			</div>
+			<div class="reference-image" style="text-align: center; margin-top: 20px;">
+				<h3>Reference Image</h3>
+				<img src="js/aurora.jpg.webp" alt="Aurora Farm Reference" style="max-width: 100%; height: auto; border: 1px solid #ccc;" />
+			</div>
 
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<p>In this experiment, I am trying to replicate the image of the aurora using procedural generation. I started by creating the barn and windows. I then moved on to generating a certain amount of trees and bushes in their relative location. Lastly I used moving rectangles to create the aurora effect in the dark sky.</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<p>\To create the sky I used vertical columns with random placement that move used sine waves. I use millis() to make the motion seem natural like the aurora borealis. I used a horiztonal cutoff and created a solid green field to set the ground. The trees use simple triangle primitives with slight size variations. The bushes are overlapping ellipses and variation to mimic organic shrubs. The barn is created with rect and triangle primitives. I relied on randomness with proper constraints to generate a similar copy of my reference image </p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<p>I was able to modify the code correctly in Glitch to create the generation I wanted. I went through a process of understanding not only random generation but also placement and constraints to make sure that the display portraited the natural image to the best capacity. Moving the code over to my portfolio came with it's own issues. The sizing and scaling was changed because the display needed to fit the size on the website. I manually went in and tweaked the code to better fit the screen by increasing the numbers of certain objects, changing the sizing and spacing. Overall, I think I was able to successfully display a proper generation of my reference image</p>
 			</div>
 
 		</section>
