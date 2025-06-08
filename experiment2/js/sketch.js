@@ -26,7 +26,9 @@ function setup() {
     resizeScreen();
   });
 
-  createButton("reimagine").mousePressed(() => seed++);
+  let button = createButton("reimagine");
+  button.parent("canvas-container"); 
+  button.mousePressed(() => seed++);
   resizeScreen();
 }
 
@@ -59,7 +61,7 @@ function draw() {
   const treeCount = 10;
   for (let i = 0; i < treeCount; i++) {
     let x = random(width);
-    let y = height / 2 + 40 + random(10);
+    let y = height / 2 + 200 + random(10);
     let s = random(60,80) ;
     triangle(x, y - s, x - s / 3, y, x + s / 3, y);
   }
