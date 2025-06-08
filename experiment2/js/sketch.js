@@ -78,15 +78,15 @@ function draw() {
 
   // Windows
   fill(barnLightColor);
-  rect(width * 0.5, height * 0.65, 8, 10);
-  rect(width * 0.6, height * 0.65, 8, 10);
-  rect(width * 0.54, height * 0.7, 6, 8);
+  rect(width * 0.24, height * 0.65, 20, 30);
+  rect(width * 0.32, height * 0.65, 20, 30);
+  rect(width * 0.28, height * 0.7, 18, 28);
 
   // Bushes
   fill(bushColor);
   for (let i = 0; i < 15; i++) {
-    let bx = width * 0.2 + i * 15 + random(-3, 3);
-    let by = height * 0.78 + random(-2, 30);
+    let bx = width * 0.2 + i * 15 + random(-3, 300);
+    let by = height * 0.78 + random(-2, 100);
     ellipse(bx, by, 12 + random(4), 8 + random(2));
   }
 }
