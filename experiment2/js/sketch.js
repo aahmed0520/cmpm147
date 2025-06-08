@@ -47,7 +47,7 @@ function draw() {
     let alpha = 140 + 60 * random();
     const auroraColor = random([auroraColor1, auroraColor2, auroraColor3]);
     fill(auroraColor + hex(floor(alpha), 2));
-    rect(x, y, 4, h);
+    rect(x, y, 10, h);
   }
 
   // Ground
@@ -60,7 +60,7 @@ function draw() {
   for (let i = 0; i < treeCount; i++) {
     let x = random(width);
     let y = height / 2 + 10 + random(10);
-    let s = random(12,18) ;
+    let s = random(30,40) ;
     triangle(x, y - s, x - s / 3, y, x + s / 3, y);
   }
 
@@ -84,10 +84,10 @@ function draw() {
 
   // Bushes
   fill(bushColor);
-  for (let i = 0; i < 15; i++) {
+  for (let i = 0; i < 50; i++) {
     let bx = width * 0.2 + i * 15 + random(-3, 300);
     let by = height * 0.78 + random(-2, 100);
-    ellipse(bx, by, 12 + random(4), 8 + random(2));
+    ellipse(bx, by, 36 + random(12), 24 + random(6));
   }
 }
 
