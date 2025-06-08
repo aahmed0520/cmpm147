@@ -60,7 +60,7 @@ function draw() {
   for (let i = 0; i < treeCount; i++) {
     let x = random(width);
     let y = height / 2 + 10 + random(10);
-    let s = width * 0.04;
+    let s = random(12, 18);
     triangle(x, y - s, x - s / 3, y, x + s / 3, y);
   }
 
