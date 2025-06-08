@@ -60,7 +60,7 @@ function draw() {
   for (let i = 0; i < treeCount; i++) {
     let x = random(width);
     let y = height / 2 + 10 + random(10);
-    let s = random(12, 18);
+    let s = width * 0.04;
     triangle(x, y - s, x - s / 3, y, x + s / 3, y);
   }
 
@@ -84,9 +84,9 @@ function draw() {
 
   // Bushes
   fill(bushColor);
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 15; i++) {
     let bx = width * 0.2 + i * 15 + random(-3, 3);
-    let by = height * 0.78 + random(-2, 2);
+    let by = height * 0.78 + random(-2, 30);
     ellipse(bx, by, 12 + random(4), 8 + random(2));
   }
 }
