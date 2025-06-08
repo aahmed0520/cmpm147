@@ -37,7 +37,7 @@ function draw() {
   background(10, 10, 20); // dark night sky
 
   // Animated aurora bands using sampled shades
-  const numBands = 50;
+  const numBands = 200;
   for (let i = 0; i < numBands; i++) {
     let baseX = width * random();
     let waveOffset = 30 * sin(millis() / 2000 + i);
@@ -47,7 +47,7 @@ function draw() {
     let alpha = 140 + 60 * random();
     const auroraColor = random([auroraColor1, auroraColor2, auroraColor3]);
     fill(auroraColor + hex(floor(alpha), 2));
-    rect(x, y, width * 0.01, h);
+    rect(x, y, 4, h);
   }
 
   // Ground
@@ -60,7 +60,7 @@ function draw() {
   for (let i = 0; i < treeCount; i++) {
     let x = random(width);
     let y = height / 2 + 10 + random(10);
-    let s = width * 0.04;
+    let s = random(12,18) ;
     triangle(x, y - s, x - s / 3, y, x + s / 3, y);
   }
 
@@ -78,21 +78,16 @@ function draw() {
 
   // Windows
   fill(barnLightColor);
-  const winW = width * 0.02;
-  const winH = height * 0.05;
-  rect(barnX + barnW * 0.2, barnY + barnH * 0.4, winW, winH);
-  rect(barnX + barnW * 0.6, barnY + barnH * 0.4, winW, winH);
-  rect(barnX + barnW * 0.4, barnY + barnH * 0.6, winW * 0.75, winH * 0.8);
+  rect(width * 0.5, height * 0.65, 8, 10);
+  rect(width * 0.6, height * 0.65, 8, 10);
+  rect(width * 0.54, height * 0.7, 6, 8);
 
   // Bushes
   fill(bushColor);
-  const bushCount = 5;
-  for (let i = 0; i < bushCount; i++) {
-    let bx = barnX + i * width * 0.035 + random(-width * 0.005, width * 0.005);
-    let by = barnY + barnH + random(-height * 0.01, height * 0.01);
-    let bushW = width * 0.03 + random(width * 0.01);
-    let bushH = height * 0.04 + random(height * 0.01);
-    ellipse(bx, by, bushW, bushH);
+  for (let i = 0; i < 15; i++) {
+    let bx = width * 0.2 + i * 15 + random(-3, 3);
+    let by = height * 0.78 + random(-2, 30);
+    ellipse(bx, by, 12 + random(4), 8 + random(2));
   }
 }
 
