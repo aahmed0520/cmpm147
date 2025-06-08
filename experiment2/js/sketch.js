@@ -1,83 +1,99 @@
-// sketch.js - purpose and description here
-// Author: Your Name
-// Date:
+/* exported setup, draw */
 
-// Here is how you might set up an OOP p5.js project
-// Note that p5.js looks for a file called sketch.js
+let seed = 239;
 
-// Constants - User-servicable parts
-// In a longer project I like to put these in a separate file
-const VALUE1 = 1;
-const VALUE2 = 2;
+// Color palette based on the image
+const grassColor = "#2f4f1c";
+const barnColor = "#302c2c";
+const barnLightColor = "#e8b55b";
+const treeColor = "#1a1a1a";
+const bushColor = "#3e5e2f";
 
-// Globals
-let myInstance;
+// Aurora color variations sampled from the reference image
+const auroraColor1 = "#b2ff5f"; // bright yellow-green
+const auroraColor2 = "#76f0a6"; // minty green
+const auroraColor3 = "#4cb1d6"; // teal-cyan
+
 let canvasContainer;
-var centerHorz, centerVert;
 
-class MyClass {
-    constructor(param1, param2) {
-        this.property1 = param1;
-        this.property2 = param2;
-    }
-
-    myMethod() {
-        // code to run when method is called
-    }
-}
-
-function resizeScreen() {
-  const containerRect = canvasContainer[0].getBoundingClientRect(); // Gets Dimensions from DOM element.
-    const containerWidth = containerRect.width;                     //canvasContainer[0] accesses the DOM from jQuery object.
-    const containerHeight = containerRect.height;                   //GetBoundingClientRect() returns the size of an element and its position relative to the viewport.
-
-    centerHorz = containerWidth / 2; // Adjusted for drawing logic
-    centerVert = containerHeight / 2; // Adjusted for drawing logic
-    console.log("Resizing...");
-    resizeCanvas(containerWidth, containerHeight);
-  // redrawCanvas(); // Redraw everything based on new size
-}
-
-// setup() function is called once when the program starts
 function setup() {
-  // place our canvas, making it fit our container
+  // responsive canvas setup
   canvasContainer = $("#canvas-container");
   let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
   canvas.parent("canvas-container");
-  // resize canvas is the page is resized
 
-  // create an instance of the class
-  myInstance = new MyClass("VALUE1", "VALUE2");
-
-  $(window).resize(function() {
+  $(window).resize(function () {
     resizeScreen();
   });
+
+  createButton("reimagine").mousePressed(() => seed++);
   resizeScreen();
 }
 
-// draw() function is called repeatedly, it's the main animation loop
 function draw() {
-  background(220);    
-  // call a method on the instance
-  myInstance.myMethod();
-
-  // Set up rotation for the rectangle
-  push(); // Save the current drawing context
-  translate(centerHorz, centerVert); // Move the origin to the rectangle's center
-  rotate(frameCount / 100.0); // Rotate by frameCount to animate the rotation
-  fill(234, 31, 81);
+  randomSeed(seed);
   noStroke();
-  rect(-125, -125, 250, 250); // Draw the rectangle centered on the new origin
-  pop(); // Restore the original drawing context
 
-  // The text is not affected by the translate and rotate
-  fill(255);
-  textStyle(BOLD);
-  textSize(140);
-  text("p5*", centerHorz - 105, centerVert + 40);
+  background(10, 10, 20); // dark night sky
+
+  // Animated aurora bands using sampled shades
+  const numBands = 50;
+  for (let i = 0; i < numBands; i++) {
+    let baseX = width * random();
+    let waveOffset = 30 * sin(millis() / 2000 + i);
+    let x = baseX + waveOffset;
+    let y = random(height / 2);
+    let h = random(40, height / 2);
+    let alpha = 140 + 60 * random();
+    const auroraColor = random([auroraColor1, auroraColor2, auroraColor3]);
+    fill(auroraColor + hex(floor(alpha), 2));
+    rect(x, y, 4, h);
+  }
+
+  // Ground
+  fill(grassColor);
+  rect(0, height / 2, width, height / 2);
+
+  // Static trees
+  fill(treeColor);
+  const treeCount = 10;
+  for (let i = 0; i < treeCount; i++) {
+    let x = random(width);
+    let y = height / 2 + 10 + random(10);
+    let s = random(12, 18);
+    triangle(x, y - s, x - s / 3, y, x + s / 3, y);
+  }
+
+  // Barn
+  fill(barnColor);
+  rect(width * 0.2, height * 0.55, width * 0.2, height * 0.25);
+  triangle(
+    width * 0.2,
+    height * 0.55,
+    width * 0.3,
+    height * 0.45,
+    width * 0.4,
+    height * 0.55
+  );
+
+  // Windows
+  fill(barnLightColor);
+  rect(width * 0.24, height * 0.65, 8, 10);
+  rect(width * 0.32, height * 0.65, 8, 10);
+  rect(width * 0.28, height * 0.7, 6, 8);
+
+  // Bushes
+  fill(bushColor);
+  for (let i = 0; i < 5; i++) {
+    let bx = width * 0.2 + i * 15 + random(-3, 3);
+    let by = height * 0.78 + random(-2, 2);
+    ellipse(bx, by, 12 + random(4), 8 + random(2));
+  }
 }
 
-// mousePressed() function is called once after every time a mouse button is pressed
-function mousePressed() {
-    // code to run when mouse is pressed
+function resizeScreen() {
+  const containerRect = canvasContainer[0].getBoundingClientRect();
+  const containerWidth = containerRect.width;
+  const containerHeight = containerRect.height;
+  resizeCanvas(containerWidth, containerHeight);
 }
