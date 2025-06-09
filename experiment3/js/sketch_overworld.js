@@ -12,16 +12,11 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(16 * numColsO, 16 * numRowsO).parent("canvas-container");
+  let canvas = createCanvas(16 * numColsO, 16 * numRowsO);
+  canvas.parent("canvas-container");
   noSmooth();
   select("#reseedButton").mousePressed(reseedO);
-  select("h1").html("Overworld Generator");
   reseedO();
-}
-
-function draw() {
-  randomSeed(seedO);
-  drawGridO(currentGridO);
 }
 
 function reseedO() {
@@ -30,6 +25,20 @@ function reseedO() {
   noiseSeed(seedO);
   select("#seedReport").html("seed " + seedO);
   currentGridO = generateGridO(numColsO, numRowsO);
+
+  cloudsO = [];
+  for (let c = 0; c < 5; c++) {
+    cloudsO.push({
+      x: random(-100, 800),
+      y: random(0, height),
+      speed: random(0.1, 0.3)
+    });
+  }
+}
+
+function draw() {
+  randomSeed(seedO);
+  drawGridO(currentGridO);
 }
 
 function placeTileO(i, j, ti, tj) {
@@ -107,7 +116,11 @@ function generateGridO(numCols, numRows) {
 
     for (let i = y - maxRadius; i <= y + maxRadius; i++) {
       for (let j = x - maxRadius; j <= x + maxRadius; j++) {
-        if (i < 0 || i >= numRows || j < 0 || j >= numCols) continue;
+        if (
+          i < 0 || i >= numRows ||
+          j < 0 || j >= numCols
+        ) continue;
+
         if (grid[i][j] !== "w") continue;
 
         let d = dist(j, i, x, y);
@@ -117,7 +130,7 @@ function generateGridO(numCols, numRows) {
         let falloff = 1 - d / maxRadius;
         let value = n * falloff;
 
-        if (value > 0.15) {  // LOWERED from 0.25 to 0.15
+        if (value > 0.25) {
           const neighbors = [
             grid[i - 1]?.[j],
             grid[i + 1]?.[j],
@@ -133,21 +146,11 @@ function generateGridO(numCols, numRows) {
     }
   }
 
-  cloudsO = [];
-  for (let c = 0; c < 5; c++) {
-    cloudsO.push({
-      x: random(-100, 800),
-      y: random(0, height),
-      speed: random(0.1, 0.3)
-    });
-  }
-
   return grid;
 }
 
 function drawGridO(grid) {
-  background('#6fa8dc'); // LIGHTER blue for visibility
-  console.log("Sample grid rows:", grid.slice(0, 5));
+  background('#1f2d75');
 
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
@@ -197,11 +200,13 @@ function drawGridO(grid) {
         else if (right) placeTileO(i, j, 21, 13);
         else drawContextO(grid, i, j, "i", 17, 9);
       } else {
-        let tile = random([
+        let waterOptions = [
           [0, 14],
           [1, 14],
           [2, 14]
-        ]);
+        ];
+        let choice = random();
+        let tile = (choice < 0.7) ? waterOptions[0] : random([waterOptions[1], waterOptions[2]]);
         placeTileO(i, j, tile[0], tile[1]);
       }
     }
