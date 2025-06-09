@@ -15,7 +15,7 @@ function setupO() {
   let canvasO = createCanvas(16 * numColsO, 16 * numRowsO);
   canvasO.parent("canvas-container");
   noSmooth();
-  select("#reseedButtonO").mousePressed(reseedO);
+  select("#reseedButton").mousePressed(reseedO);
   reseedO();
 }
 
@@ -23,7 +23,7 @@ function reseedO() {
   seedO = (seedO | 0) + 1109;
   randomSeed(seedO);
   noiseSeed(seedO);
-  select("#seedReportO").html("seed " + seedO);
+  select("#seedReport").html("seed " + seedO);
   currentGridO = generateGridO(numColsO, numRowsO);
 }
 

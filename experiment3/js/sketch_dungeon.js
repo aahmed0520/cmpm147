@@ -13,7 +13,7 @@ function preload() {
 function setup() {
   createCanvas(16 * numColsD, 16 * numRowsD).parent("canvas-container");
   noSmooth();
-  select("#reseedButtonD").mousePressed(reseed);
+  select("#reseedButton").mousePressed(reseed);
   reseed();
 }
 
@@ -21,7 +21,7 @@ function reseed() {
   seedD = (seedD | 0) + 1109;
   randomSeed(seedD);
   noiseSeed(seedD);
-  select("#seedReportD").html("seed " + seedD);
+  select("#seedReport").html("seed " + seedD);
   currentGridD = generateGrid(numColsD, numRowsD);
 }
 
