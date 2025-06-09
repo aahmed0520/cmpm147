@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Procedural Sketch Toggle</title>
+  <title>Experiment 3 - Alternate Worlds</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/site.css" />
@@ -14,7 +14,7 @@
 <body>
   <main id="content">
     <section>
-      <h1>Procedural Sketch Viewer</h1>
+      <h1>Experiment 3 - Alternate Worlds</h1>
 
       <div class="minor-section">
         <div style="margin-bottom: 10px;">
@@ -30,12 +30,17 @@
 
       <div class="minor-section">
         <h2>Description</h2>
-        <p>Toggle between the dungeon and overworld procedural sketches. Click reseed to regenerate the current one.</p>
+        <p>I created a generator that randomly generates a map of a dungeon and overworld. Toggle between the dungeon and overworld procedural sketches. Click reseed to regenerate the current one.</p>
+      </div>
+
+      <div class="minor-section">
+        <h2>Technical</h2>
+        <p>My project loads and unloads different p5.js sketches using isolated instances. Each sketch uses seeded randomness for reproducibility, procedurally generates tile-based layouts, and supports reseeding and animation through `frameCount` where applicable.</p>
       </div>
 
       <div class="minor-section">
         <h2>Reflection</h2>
-        <p>This setup demonstrates loading different sketches one at a time while sharing a single canvas space.</p>
+        <p>After a lot of trial and error I was able to create the map that I was looking for in both sections. Havimg to allocate the correct assets came with its own troubles, but I assigned edges and corners to the rooms and continents. This way I was able to correctly allocate assets and create the maps I was looking for. Lastly, I was able to quickly animate the hallway and clouds in each map through their own method.</p>
       </div>
     </section>
 
@@ -79,7 +84,6 @@
         loadSketch('js/sketch_overworld.js');
       });
 
-      // Auto-load Dungeon sketch on first load
       window.addEventListener('DOMContentLoaded', () => {
         loadSketch('js/sketch_dungeon.js');
       });
