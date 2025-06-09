@@ -5,52 +5,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <link rel="stylesheet" type="text/css" href="../css/site.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="../css/site.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
 
-  <!-- jQuery and p5.js -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
-
-  <!-- Custom scripts -->
-  <script type="text/javascript" src="../js/site.js" defer></script>
-  <script type="text/javascript" src="./js/sketch.js" defer></script>
+  <script src="./js/sketch.js" defer></script>
+  <script src="../js/site.js" defer></script>
 
   <style>
     #canvasContainer {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin: auto;
-      padding: 20px 0;
-      width: fit-content;
+      padding: 10px 0;
+      min-height: 320px;
     }
 
     canvas {
       display: block;
       image-rendering: pixelated;
+      max-width: 100%;
+      height: auto;
     }
 
     #controls {
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
       margin-bottom: 10px;
     }
   </style>
 </head>
-
 <body>
   <main id="content">
     <section>
       <h1>Experiment X - Procedural Worlds</h1>
 
-      <div id="controls" class="minor-section">
-        <!-- Buttons injected by p5.js -->
-      </div>
-
-      <div id="canvasContainer" class="minor-section">
-        <!-- Canvas will appear here -->
+      <div class="minor-section">
+        <div id="controls"></div>
+        <div id="canvasContainer">
+          <!-- Canvas will be injected by p5.js -->
+        </div>
       </div>
 
       <div class="minor-section">
