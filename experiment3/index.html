@@ -1,79 +1,104 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Experiment X - Procedural Worlds</title>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Experiment X - Procedural Worlds</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<link rel="stylesheet" type="text/css" href="../css/site.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="../css/site.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 
-	<!-- jQuery and p5.js -->
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-		crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
+  <!-- jQuery and p5.js -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
 
-	<!-- Custom scripts -->
-	<script type="text/javascript" src="../js/site.js" defer></script>
-	<script type="text/javascript" src="./js/sketch.js" defer></script>
+  <!-- Custom scripts -->
+  <script type="text/javascript" src="../js/site.js" defer></script>
+  <script type="text/javascript" src="./js/sketch.js" defer></script>
 
-	<style>
-		#canvasContainer {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin: auto;
-			padding: 20px 0;
-			width: fit-content;
-		}
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #ffffff;
+      font-family: sans-serif;
+    }
 
-		canvas {
-			display: block;
-			image-rendering: pixelated;
-		}
+    #controls {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: white;
+      padding: 10px 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
 
-		#controls {
-			text-align: center;
-			margin-bottom: 10px;
-		}
-	</style>
+    #canvasContainer {
+      height: 100vh;
+      width: 100vw;
+      position: relative;
+    }
+
+    canvas {
+      display: block;
+      image-rendering: pixelated;
+    }
+
+    main {
+      padding-top: 500px; /* allows scroll space to read below */
+    }
+
+    .minor-section {
+      max-width: 900px;
+      margin: 2em auto;
+      padding: 1em;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: white;
+    }
+  </style>
 </head>
 
 <body>
-	<main id="content">
-		<section>
-			<h1>Experiment X - Procedural Worlds</h1>
+  <div id="controls">
+    <!-- Buttons will be inserted here by sketch.js -->
+  </div>
 
-			<div id="controls" class="minor-section">
-				<!-- Buttons injected by p5.js -->
-			</div>
+  <div id="canvasContainer">
+    <!-- Canvas will be dynamically inserted here -->
+  </div>
 
-			<div id="canvasContainer" class="minor-section">
-				<!-- Canvas will appear here -->
-			</div>
+  <main id="content">
+    <section>
+      <h1>Experiment X - Procedural Worlds</h1>
 
-			<div class="minor-section">
-				<h2>Description</h2>
-				<p>This project explores procedural generation through the creation of a dungeon and overworld system using tiles.</p>
-			</div>
+      <div class="minor-section">
+        <h2>Description</h2>
+        <p>This project explores procedural generation through the creation of a dungeon and overworld system using tiles.</p>
+      </div>
 
-			<div class="minor-section">
-				<h2>Technical</h2>
-				<p>Includes grid-based terrain generation, autotiling, random seeds, and animated elements like clouds and dungeon hallways.</p>
-			</div>
+      <div class="minor-section">
+        <h2>Technical</h2>
+        <p>Includes grid-based terrain generation, autotiling, seeded randomness, animation, and layered environmental effects like clouds.</p>
+      </div>
 
-			<div class="minor-section">
-				<h2>Reflection</h2>
-				<p>Reflect here on what was difficult, rewarding, or unexpected during your process!</p>
-			</div>
-		</section>
+      <div class="minor-section">
+        <h2>Reflection</h2>
+        <p>This project challenged me to learn noise-based generation and dynamic rendering using p5.js. Tweaking tile logic and coordinating multiple modes (dungeon vs. overworld) taught me how to organize code better and push beyond a static sketch.</p>
+      </div>
+    </section>
 
-		<nav id="links" class="minor-section">
-			<ul>
-				<li><a href="../index.html">Home</a></li>
-			</ul>
-		</nav>
-	</main>
+    <nav class="minor-section">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
+  </main>
 </body>
 </html>
