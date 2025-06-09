@@ -1,59 +1,79 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Experiment X - Subject/Topic</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dungeon & Overworld Viewer</title>
 
-  <link rel="stylesheet" type="text/css" href="../css/site.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <!-- Load p5.js -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
+  <!-- Optional: jQuery if needed -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-  <!-- jQuery and p5.js -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+  <!-- Your custom script -->
+  <script src="./js/sketch.js" defer></script>
 
-  <!-- Custom scripts -->
-  <script type="text/javascript" src="../js/site.js" defer></script>
-  <script type="text/javascript" src="./js/sketch.js" defer></script>
+  <!-- Inline styling to layout canvas and controls -->
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #e6e6e6;
+      margin: 0;
+      padding: 0;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    #canvasContainer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px auto;
+      border: 2px solid #444;
+      width: fit-content;
+      background: white;
+    }
+
+    canvas {
+      display: block;
+      image-rendering: pixelated;
+    }
+
+    #controls {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    button {
+      margin: 0 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+    }
+
+    #seedReport {
+      font-weight: bold;
+      margin-left: 15px;
+    }
+  </style>
 </head>
-
 <body>
-  <main id="content">
-    <section>
-      <h1>Experiment X - Subject/Topic</h1>
+  <main>
+    <h1>Dungeon & Overworld Generator</h1>
 
-      <div class="minor-section">
-        <div id="canvas-container">
-          <!-- canvas will be added here -->
-        </div>
-        <div class="fullscreen-box">
-          <button id="toggle-fullscreen">Fullscreen</button>
-        </div>
-      </div>
+    <div id="controls">
+      <button id="reseedButton">Reseed</button>
+      <span id="seedReport">seed 0</span>
+    </div>
 
-      <div class="minor-section">
-        <h2>Description</h2>
-        <p>What are you trying to acomplish with this experiment?</p>
-      </div>
-
-      <div class="minor-section">
-        <h2>Technical</h2>
-        <p>Describe in detail what you did technically and how it works?</p>
-      </div>
-
-      <div class="minor-section">
-        <h2>Reflection</h2>
-        <p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
-      </div>
-    </section>
-
-    <nav id="links" class="minor-section">
-      <ul>
-        <li><a href="../index.html">Home</a></li>
-      </ul>
-    </nav>
+    <div id="canvasContainer">
+      <!-- p5.js canvas will go here -->
+    </div>
   </main>
 </body>
 </html>
