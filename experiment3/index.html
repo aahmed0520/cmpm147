@@ -1,58 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Experiment X - Subject/Topic</title>
+	<title>Experiment X - Procedural Worlds</title>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<link rel="stylesheet" type="text/css" href="../css/site.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
+	<!-- jQuery and p5.js -->
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-        crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+		integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
 
-	<!-- Site-wide logic -->
-    <script type="text/javascript" src="../js/site.js" defer></script>
-
-	<!-- ONLY include sketch.js -->
+	<!-- Custom scripts -->
+	<script type="text/javascript" src="../js/site.js" defer></script>
 	<script type="text/javascript" src="./js/sketch.js" defer></script>
+
+	<style>
+		#canvasContainer {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin: auto;
+			padding: 20px 0;
+			width: fit-content;
+		}
+
+		canvas {
+			display: block;
+			image-rendering: pixelated;
+		}
+
+		#controls {
+			text-align: center;
+			margin-bottom: 10px;
+		}
+	</style>
 </head>
+
 <body>
 	<main id="content">
 		<section>
-			<h1>Experiment X - Subject/Topic</h1>
+			<h1>Experiment X - Procedural Worlds</h1>
 
-			<div class="minor-section">
-				<div id="canvasContainer">
-					<!-- Canvas will be injected here -->
-				</div>
-                <div class="fullscreen-box">
-                    <button id="toggle-fullscreen">Fullscreen</button>
-                </div>
+			<div id="controls" class="minor-section">
+				<!-- Buttons injected by p5.js -->
+			</div>
+
+			<div id="canvasContainer" class="minor-section">
+				<!-- Canvas will appear here -->
 			</div>
 
 			<div class="minor-section">
 				<h2>Description</h2>
-				<p>What are you trying to acomplish with this experiment?</p>
+				<p>This project explores procedural generation through the creation of a dungeon and overworld system using tiles.</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Technical</h2>
-				<p>Describe in detail what you did technically and how it works?</p>
+				<p>Includes grid-based terrain generation, autotiling, random seeds, and animated elements like clouds and dungeon hallways.</p>
 			</div>
 
 			<div class="minor-section">
 				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
+				<p>Reflect here on what was difficult, rewarding, or unexpected during your process!</p>
 			</div>
 		</section>
 
 		<nav id="links" class="minor-section">
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-            </ul>
+			<ul>
+				<li><a href="../index.html">Home</a></li>
+			</ul>
 		</nav>
 	</main>
 </body>
