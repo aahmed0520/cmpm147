@@ -3,39 +3,40 @@ let tilesetImageO;
 let currentGridO = [];
 let numColsO = 30;
 let numRowsO = 30;
-let clouds = [];
+let cloudsO = [];
 
-function preload() {
+function preloadO() {
   tilesetImageO = loadImage(
     "https://cdn.glitch.com/25101045-29e2-407a-894c-e0243cd8c7c6%2FtilesetP8.png?v=1611654020438"
   );
 }
 
-function setup() {
-  createCanvas(16 * numColsO, 16 * numRowsO).parent("canvasContainerO");
+function setupO() {
+  let canvasO = createCanvas(16 * numColsO, 16 * numRowsO);
+  canvasO.parent("canvasContainerO");
   noSmooth();
-  select("#reseedButtonO").mousePressed(reseed);
-  reseed();
+  select("#reseedButtonO").mousePressed(reseedO);
+  reseedO();
 }
 
-function reseed() {
+function reseedO() {
   seedO = (seedO | 0) + 1109;
   randomSeed(seedO);
   noiseSeed(seedO);
   select("#seedReportO").html("seed " + seedO);
-  currentGridO = generateGrid(numColsO, numRowsO);
+  currentGridO = generateGridO(numColsO, numRowsO);
 }
 
-function draw() {
+function drawO() {
   randomSeed(seedO);
-  drawGrid(currentGridO);
+  drawGridO(currentGridO);
 }
 
-function placeTile(i, j, ti, tj) {
+function placeTileO(i, j, ti, tj) {
   image(tilesetImageO, 16 * j, 16 * i, 16, 16, 8 * ti, 8 * tj, 8, 8);
 }
 
-function gridCheck(grid, i, j, target) {
+function gridCheckO(grid, i, j, target) {
   return (
     i >= 0 &&
     j >= 0 &&
@@ -45,11 +46,11 @@ function gridCheck(grid, i, j, target) {
   );
 }
 
-function gridCode(grid, i, j, target) {
-  let north = gridCheck(grid, i - 1, j, target) ? 1 : 0;
-  let south = gridCheck(grid, i + 1, j, target) ? 2 : 0;
-  let east = gridCheck(grid, i, j + 1, target) ? 4 : 0;
-  let west = gridCheck(grid, i, j - 1, target) ? 8 : 0;
+function gridCodeO(grid, i, j, target) {
+  let north = gridCheckO(grid, i - 1, j, target) ? 1 : 0;
+  let south = gridCheckO(grid, i + 1, j, target) ? 2 : 0;
+  let east = gridCheckO(grid, i, j + 1, target) ? 4 : 0;
+  let west = gridCheckO(grid, i, j - 1, target) ? 8 : 0;
   return north + south + east + west;
 }
 
@@ -60,15 +61,15 @@ const lookupOverworld = [
   [0, 3], [1, 3], [2, 3], [3, 3]
 ];
 
-function drawContext(grid, i, j, target, dti, dtj) {
-  let code = gridCode(grid, i, j, target);
+function drawContextO(grid, i, j, target, dti, dtj) {
+  let code = gridCodeO(grid, i, j, target);
   let tile = lookupOverworld[code];
   if (tile) {
-    placeTile(i, j, dti + tile[0], dtj + tile[1]);
+    placeTileO(i, j, dti + tile[0], dtj + tile[1]);
   }
 }
 
-function generateGrid(numCols, numRows) {
+function generateGridO(numCols, numRows) {
   let grid = [];
 
   for (let i = 0; i < numRows; i++) {
@@ -136,9 +137,9 @@ function generateGrid(numCols, numRows) {
     }
   }
 
-  clouds = [];
+  cloudsO = [];
   for (let c = 0; c < 5; c++) {
-    clouds.push({
+    cloudsO.push({
       x: random(-100, 800),
       y: random(0, height),
       speed: random(0.1, 0.3)
@@ -148,7 +149,7 @@ function generateGrid(numCols, numRows) {
   return grid;
 }
 
-function drawGrid(grid) {
+function drawGridO(grid) {
   background('#1f2d75');
 
   for (let i = 0; i < grid.length; i++) {
@@ -156,48 +157,48 @@ function drawGrid(grid) {
       const cell = grid[i][j];
 
       if (cell === "g") {
-        let top = !gridCheck(grid, i - 1, j, "g");
-        let bottom = !gridCheck(grid, i + 1, j, "g");
-        let left = !gridCheck(grid, i, j - 1, "g");
-        let right = !gridCheck(grid, i, j + 1, "g");
+        let top = !gridCheckO(grid, i - 1, j, "g");
+        let bottom = !gridCheckO(grid, i + 1, j, "g");
+        let left = !gridCheckO(grid, i, j - 1, "g");
+        let right = !gridCheckO(grid, i, j + 1, "g");
 
         let topleft = top && left;
         let topright = top && right;
         let bottomleft = bottom && left;
         let bottomright = bottom && right;
 
-        if (topleft) placeTile(i, j, 6, 14);
-        else if (topright) placeTile(i, j, 4, 14);
-        else if (bottomleft) placeTile(i, j, 6, 12);
-        else if (bottomright) placeTile(i, j, 4, 12);
-        else if (top) placeTile(i, j, 5, 14);
-        else if (bottom) placeTile(i, j, 5, 12);
-        else if (left) placeTile(i, j, 6, 13);
-        else if (right) placeTile(i, j, 4, 13);
+        if (topleft) placeTileO(i, j, 6, 14);
+        else if (topright) placeTileO(i, j, 4, 14);
+        else if (bottomleft) placeTileO(i, j, 6, 12);
+        else if (bottomright) placeTileO(i, j, 4, 12);
+        else if (top) placeTileO(i, j, 5, 14);
+        else if (bottom) placeTileO(i, j, 5, 12);
+        else if (left) placeTileO(i, j, 6, 13);
+        else if (right) placeTileO(i, j, 4, 13);
         else {
-          placeTile(i, j, 0, 12);
-          if (random() < 0.1) placeTile(i, j, 14, 12);
+          placeTileO(i, j, 0, 12);
+          if (random() < 0.1) placeTileO(i, j, 14, 12);
         }
       } else if (cell === "i") {
-        let top = !gridCheck(grid, i - 1, j, "i");
-        let bottom = !gridCheck(grid, i + 1, j, "i");
-        let left = !gridCheck(grid, i, j - 1, "i");
-        let right = !gridCheck(grid, i, j + 1, "i");
+        let top = !gridCheckO(grid, i - 1, j, "i");
+        let bottom = !gridCheckO(grid, i + 1, j, "i");
+        let left = !gridCheckO(grid, i, j - 1, "i");
+        let right = !gridCheckO(grid, i, j + 1, "i");
 
         let topleft = top && left;
         let topright = top && right;
         let bottomleft = bottom && left;
         let bottomright = bottom && right;
 
-        if (topleft) placeTile(i, j, 23, 14);
-        else if (topright) placeTile(i, j, 21, 14);
-        else if (bottomleft) placeTile(i, j, 23, 12);
-        else if (bottomright) placeTile(i, j, 21, 12);
-        else if (top) placeTile(i, j, 22, 14);
-        else if (bottom) placeTile(i, j, 22, 12);
-        else if (left) placeTile(i, j, 23, 13);
-        else if (right) placeTile(i, j, 21, 13);
-        else drawContext(grid, i, j, "i", 17, 9);
+        if (topleft) placeTileO(i, j, 23, 14);
+        else if (topright) placeTileO(i, j, 21, 14);
+        else if (bottomleft) placeTileO(i, j, 23, 12);
+        else if (bottomright) placeTileO(i, j, 21, 12);
+        else if (top) placeTileO(i, j, 22, 14);
+        else if (bottom) placeTileO(i, j, 22, 12);
+        else if (left) placeTileO(i, j, 23, 13);
+        else if (right) placeTileO(i, j, 21, 13);
+        else drawContextO(grid, i, j, "i", 17, 9);
       } else {
         let waterOptions = [
           [0, 14],
@@ -206,14 +207,14 @@ function drawGrid(grid) {
         ];
         let choice = random();
         let tile = (choice < 0.7) ? waterOptions[0] : random([waterOptions[1], waterOptions[2]]);
-        placeTile(i, j, tile[0], tile[1]);
+        placeTileO(i, j, tile[0], tile[1]);
       }
     }
   }
 
   noStroke();
   fill(100, 100, 100, 80);
-  for (let c of clouds) {
+  for (let c of cloudsO) {
     ellipse(c.x, c.y, 80, 40);
     ellipse(c.x + 25, c.y - 10, 60, 30);
     ellipse(c.x - 25, c.y - 5, 60, 35);
