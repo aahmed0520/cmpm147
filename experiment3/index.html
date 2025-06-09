@@ -21,6 +21,10 @@
     main {
       padding: 1em;
     }
+    h1 {
+      text-align: center;
+      margin-top: 1em;
+    }
     .sketch-section {
       margin-bottom: 2em;
       background: #fff;
@@ -45,10 +49,25 @@
       image-rendering: pixelated;
       margin: auto;
     }
+    nav ul {
+      list-style: none;
+      padding-left: 0;
+      text-align: center;
+    }
+    nav ul li {
+      display: inline;
+      margin: 0 10px;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #0366d6;
+    }
   </style>
 </head>
 <body>
-  <main>
+  <main id="content">
+    <h1>Experiment X - Procedural Worlds</h1>
+
     <section class="sketch-section">
       <div class="sketch-header">
         <h2>Dungeon Generator</h2>
@@ -71,20 +90,26 @@
       <div id="canvasContainerO"></div>
     </section>
 
-    <section>
+    <section class="minor-section">
       <h2>Description</h2>
       <p>This project explores procedural generation through the creation of a dungeon and overworld system using tiles.</p>
     </section>
 
-    <section>
+    <section class="minor-section">
       <h2>Technical</h2>
       <p>Includes grid-based terrain generation, autotiling, random seeds, and animated elements like clouds and dungeon hallways.</p>
     </section>
 
-    <section>
+    <section class="minor-section">
       <h2>Reflection</h2>
       <p>Reflect here on what was difficult, rewarding, or unexpected during your process!</p>
     </section>
+
+    <nav id="links" class="minor-section">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
   </main>
 
   <!-- Sketch Scripts -->
