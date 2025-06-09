@@ -1,8 +1,8 @@
-let seedD = 0;
-let tilesetImageD;
-let currentGridD = [];
-let numColsD = 30;
-let numRowsD = 30;
+var seedD = 0;
+var tilesetImageD;
+var currentGridD = [];
+var numColsD = 30;
+var numRowsD = 30;
 
 function preload() {
   tilesetImageD = loadImage(

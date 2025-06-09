@@ -1,9 +1,9 @@
-let seedO = 0;
-let tilesetImageO;
-let currentGridO = [];
-let numColsO = 30;
-let numRowsO = 30;
-let cloudsO = [];
+var seedO = 0;
+var tilesetImageO;
+var currentGridO = [];
+var numColsO = 30;
+var numRowsO = 30;
+var cloudsO = [];
 
 function preloadO() {
   tilesetImageO = loadImage(
