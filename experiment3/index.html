@@ -1,57 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Experiment X - Procedural Worlds</title>
 
-  <link rel="stylesheet" type="text/css" href="../css/site.css" />
-  <link rel="stylesheet" type="text/css" href="css/style.css" />
-
+  <!-- External Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-  <!-- p5 sketch -->
-  <script src="js/sketch.js" defer></script>
+  <!-- Styles -->
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f0f0f0;
+    }
+    main {
+      padding: 1em;
+    }
+    .sketch-section {
+      margin-bottom: 2em;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 1em;
+    }
+    .sketch-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5em;
+    }
+    #canvasContainerD, #canvasContainerO {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: auto;
+    }
+    canvas {
+      display: block;
+      image-rendering: pixelated;
+      margin: auto;
+    }
+  </style>
 </head>
-
 <body>
-  <main id="content">
-    <section>
-      <h1>Experiment X - Procedural Worlds</h1>
-
-      <div class="minor-section">
-        <div id="controls">
-          <button id="reseedButton">Reseed</button>
-          <span id="seedReport">seed</span>
-        </div>
-
-        <div id="canvasContainer">
-          <!-- p5 canvas will appear here -->
+  <main>
+    <section class="sketch-section">
+      <div class="sketch-header">
+        <h2>Dungeon Generator</h2>
+        <div>
+          <button id="reseedButtonD">Reseed Dungeon</button>
+          <span id="seedReportD">seed 0</span>
         </div>
       </div>
-
-      <div class="minor-section">
-        <h2>Description</h2>
-        <p>This project explores procedural generation through the creation of a dungeon and overworld system using tiles.</p>
-      </div>
-
-      <div class="minor-section">
-        <h2>Technical</h2>
-        <p>Includes grid-based terrain generation, autotiling, seeded randomness, animation, and layered rendering techniques.</p>
-      </div>
-
-      <div class="minor-section">
-        <h2>Reflection</h2>
-        <p>Using p5.js, I learned to generate worlds using noise and random values and how to lay out tiles dynamically. Combining dungeon and overworld generators helped me understand system design and modularity in creative coding.</p>
-      </div>
+      <div id="canvasContainerD"></div>
     </section>
 
-    <nav id="links" class="minor-section">
-      <ul>
-        <li><a href="../index.html">Home</a></li>
-      </ul>
-    </nav>
+    <section class="sketch-section">
+      <div class="sketch-header">
+        <h2>Overworld Generator</h2>
+        <div>
+          <button id="reseedButtonO">Reseed Overworld</button>
+          <span id="seedReportO">seed 0</span>
+        </div>
+      </div>
+      <div id="canvasContainerO"></div>
+    </section>
+
+    <section>
+      <h2>Description</h2>
+      <p>This project explores procedural generation through the creation of a dungeon and overworld system using tiles.</p>
+    </section>
+
+    <section>
+      <h2>Technical</h2>
+      <p>Includes grid-based terrain generation, autotiling, random seeds, and animated elements like clouds and dungeon hallways.</p>
+    </section>
+
+    <section>
+      <h2>Reflection</h2>
+      <p>Reflect here on what was difficult, rewarding, or unexpected during your process!</p>
+    </section>
   </main>
+
+  <!-- Sketch Scripts -->
+  <script src="sketch_dungeon.js"></script>
+  <script src="sketch_overworld.js"></script>
 </body>
 </html>
