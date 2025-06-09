@@ -13,7 +13,7 @@ function preloadO() {
 
 function setupO() {
   let canvasO = createCanvas(16 * numColsO, 16 * numRowsO);
-  canvasO.parent("canvasContainerO");
+  canvasO.parent("canvas-container");
   noSmooth();
   select("#reseedButtonO").mousePressed(reseedO);
   reseedO();

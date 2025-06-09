@@ -11,7 +11,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(16 * numColsD, 16 * numRowsD).parent("canvasContainerD");
+  createCanvas(16 * numColsD, 16 * numRowsD).parent("canvas-container");
   noSmooth();
   select("#reseedButtonD").mousePressed(reseed);
   reseed();
