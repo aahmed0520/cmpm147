@@ -1,68 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<!-- This title is used for tabs and bookmarks -->
-	<title>Experiment X - Procedural Worlds</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Experiment X - Procedural Worlds</title>
 
-	<!-- Use UTF character set, a good idea with any webpage -->
-	<meta charset="UTF-8" />
-	<!-- Set viewport so page remains consistently scaled w narrow devices -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="../css/site.css" />
+  <link rel="stylesheet" type="text/css" href="css/style.css" />
 
-	<!-- Include CSS file, including a site-wide CSS and for this particular page -->
-	<link rel="stylesheet" type="text/css" href="../css/site.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-	<!-- Load jQuery library -->
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-        crossorigin="anonymous"></script>
-	<!-- Load p5.js library -->
-	<script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
-
-	<!-- Link to javascript files - DEFER waits until all elements are rendered -->
-    <script type="text/javascript" src="../js/site.js" defer></script>
-	<script type="text/javascript" src="./js/sketch.js" defer></script>
+  <!-- p5 sketch -->
+  <script src="js/sketch.js" defer></script>
 </head>
+
 <body>
-	<main id="content">
-		<section>
+  <main id="content">
+    <section>
+      <h1>Experiment X - Procedural Worlds</h1>
 
-			<h1>Experiment X - Procedural Worlds</h1>
+      <div class="minor-section">
+        <div id="controls">
+          <button id="reseedButton">Reseed</button>
+          <span id="seedReport">seed</span>
+        </div>
 
-			<div class="minor-section">
-				<div id="controls" style="margin-bottom: 10px;">
-					<button id="reseedButton">Reseed</button>
-					<span id="seedReport">seed 0</span>
-				</div>
+        <div id="canvasContainer">
+          <!-- p5 canvas will appear here -->
+        </div>
+      </div>
 
-				<div id="canvasContainer">
-					<!-- canvas will be added here -->
-				</div>
-			</div>
+      <div class="minor-section">
+        <h2>Description</h2>
+        <p>This project explores procedural generation through the creation of a dungeon and overworld system using tiles.</p>
+      </div>
 
-			<div class="minor-section">
-				<h2>Description</h2>
-				<p>This project explores procedural generation through the creation of a dungeon and overworld system using tiles.</p>
-			</div>
+      <div class="minor-section">
+        <h2>Technical</h2>
+        <p>Includes grid-based terrain generation, autotiling, seeded randomness, animation, and layered rendering techniques.</p>
+      </div>
 
-			<div class="minor-section">
-				<h2>Technical</h2>
-				<p>Includes grid-based terrain generation, autotiling, random seeds, and animated elements like clouds and dungeon hallways.</p>
-			</div>
+      <div class="minor-section">
+        <h2>Reflection</h2>
+        <p>Using p5.js, I learned to generate worlds using noise and random values and how to lay out tiles dynamically. Combining dungeon and overworld generators helped me understand system design and modularity in creative coding.</p>
+      </div>
+    </section>
 
-			<div class="minor-section">
-				<h2>Reflection</h2>
-				<p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
-			</div>
-
-		</section>
-		<nav id="links" class="minor-section">
-			<!-- Put link back to homepage here. -->
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-            </ul>
-		</nav>
-	</main>
+    <nav id="links" class="minor-section">
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
+    </nav>
+  </main>
 </body>
 </html>
