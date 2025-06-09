@@ -65,8 +65,8 @@ function generateDungeon(cols, rows) {
     attempts++;
     let w = floor(random(4, 8));
     let h = floor(random(4, 8));
-    let x = floor(random(-5, cols - w - 5));
-    let y = floor(random(-5, rows - h - 5));
+    let x = floor(random(1, cols - w - 1));
+    let y = floor(random(1, rows - h - 1));
     let newRoom = { x, y, w, h };
 
     if (rooms.some(r => overlaps(r, newRoom))) continue;
@@ -97,9 +97,13 @@ function generateDungeon(cols, rows) {
 
 function drawHallway(grid, r1, c1, r2, c2) {
   if (r1 === r2) {
-    for (let j = min(c1, c2); j <= max(c1, c2); j++) grid[r1][j] = "+";
+    for (let j = min(c1, c2); j <= max(c1, c2); j++) {
+      if (grid[r1] && grid[r1][j] !== undefined) grid[r1][j] = "+";
+    }
   } else if (c1 === c2) {
-    for (let i = min(r1, r2); i <= max(r1, r2); i++) grid[i][c1] = "+";
+    for (let i = min(r1, r2); i <= max(r1, r2); i++) {
+      if (grid[i] && grid[i][c1] !== undefined) grid[i][c1] = "+";
+    }
   }
 }
 
