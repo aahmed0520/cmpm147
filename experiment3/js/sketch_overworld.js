@@ -25,6 +25,7 @@ function reseedO() {
   noiseSeed(seedO);
   select("#seedReport").html("seed " + seedO);
   currentGridO = generateGridO(numColsO, numRowsO);
+  console.log("Sample grid rows:", currentGridO);
 
   cloudsO = [];
   for (let c = 0; c < 5; c++) {
