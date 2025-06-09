@@ -1,75 +1,82 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- This title is used for tabs and bookmarks -->
-  <title>Experiment X - Procedural Worlds</title>
-
-  <!-- Use UTF character set -->
+  <title>Procedural Sketch Toggle</title>
   <meta charset="UTF-8" />
-  <!-- Responsive viewport -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../css/site.css" />
+  <link rel="stylesheet" href="css/style.css" />
 
-  <!-- CSS Files -->
-  <link rel="stylesheet" type="text/css" href="../css/site.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-
-  <!-- Libraries -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
-
-  <!-- Project Scripts - fixed paths -->
-  <script type="text/javascript" src="js/sketch_dungeon.js" defer></script>
-  <script type="text/javascript" src="js/sketch_overworld.js" defer></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
 </head>
 <body>
   <main id="content">
     <section>
-      <h1>Experiment X - Procedural Worlds</h1>
+      <h1>Procedural Sketch Viewer</h1>
 
       <div class="minor-section">
-        <div class="sketch-header">
-          <h2>Dungeon Generator</h2>
-          <div>
-            <button id="reseedButtonD">Reseed Dungeon</button>
-            <span id="seedReportD">seed 0</span>
-          </div>
+        <div>
+          <button id="load-dungeon">Show Dungeon</button>
+          <button id="load-overworld">Show Overworld</button>
         </div>
-        <div id="canvasContainerD"></div>
-      </div>
-
-      <div class="minor-section">
-        <div class="sketch-header">
-          <h2>Overworld Generator</h2>
-          <div>
-            <button id="reseedButtonO">Reseed Overworld</button>
-            <span id="seedReportO">seed 0</span>
-          </div>
+        <div id="canvas-container" class="canvas-box"></div>
+        <div id="controls" style="margin-top: 10px;">
+          <button id="reseedButton">Reseed</button>
+          <span id="seedReport"></span>
         </div>
-        <div id="canvasContainerO"></div>
       </div>
 
       <div class="minor-section">
         <h2>Description</h2>
-        <p>This project explores procedural generation through the creation of a dungeon and overworld system using tiles.</p>
-      </div>
-
-      <div class="minor-section">
-        <h2>Technical</h2>
-        <p>Includes grid-based terrain generation, autotiling, random seeds, and animated elements like clouds and dungeon hallways.</p>
+        <p>Toggle between the dungeon and overworld procedural sketches. Click reseed to regenerate the current one.</p>
       </div>
 
       <div class="minor-section">
         <h2>Reflection</h2>
-        <p>Reflect here on what was difficult, rewarding, or unexpected during your process!</p>
+        <p>This setup demonstrates loading different sketches one at a time while sharing a single canvas space.</p>
       </div>
     </section>
-
     <nav id="links" class="minor-section">
-      <ul>
-        <li><a href="../index.html">Home</a></li>
-      </ul>
+      <ul><li><a href="../index.html">Home</a></li></ul>
     </nav>
+
+    <script>
+      let currentScript = null;
+      let p5instance = null;
+
+      function unloadCurrentSketch() {
+        if (p5instance) {
+          p5instance.remove();
+          p5instance = null;
+        }
+        if (currentScript) {
+          document.body.removeChild(currentScript);
+          currentScript = null;
+        }
+      }
+
+      function loadSketch(scriptPath) {
+        unloadCurrentSketch();
+
+        currentScript = document.createElement('script');
+        currentScript.src = scriptPath;
+        currentScript.onload = () => console.log(scriptPath + ' loaded.');
+        document.body.appendChild(currentScript);
+      }
+
+      document.getElementById('load-dungeon').addEventListener('click', () => {
+        loadSketch('./js/sketch_dungeon.js');
+      });
+      document.getElementById('load-overworld').addEventListener('click', () => {
+        loadSketch('./js/sketch_overworld.js');
+      });
+
+      // Optional: Auto-load dungeon on first visit
+      window.addEventListener('DOMContentLoaded', () => {
+        loadSketch('./js/sketch_dungeon.js');
+      });
+    </script>
   </main>
 </body>
 </html>
