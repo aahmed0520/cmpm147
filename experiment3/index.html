@@ -7,8 +7,9 @@
   <link rel="stylesheet" href="../css/site.css" />
   <link rel="stylesheet" href="css/style.css" />
 
+  <!-- JS Libraries -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
 </head>
 <body>
   <main id="content">
@@ -16,14 +17,14 @@
       <h1>Procedural Sketch Viewer</h1>
 
       <div class="minor-section">
-        <div>
+        <div style="margin-bottom: 10px;">
           <button id="load-dungeon">Show Dungeon</button>
           <button id="load-overworld">Show Overworld</button>
         </div>
         <div id="canvas-container" class="canvas-box"></div>
         <div id="controls" style="margin-top: 10px;">
           <button id="reseedButton">Reseed</button>
-          <span id="seedReport"></span>
+          <span id="seedReport">seed 0</span>
         </div>
       </div>
 
@@ -37,6 +38,7 @@
         <p>This setup demonstrates loading different sketches one at a time while sharing a single canvas space.</p>
       </div>
     </section>
+
     <nav id="links" class="minor-section">
       <ul><li><a href="../index.html">Home</a></li></ul>
     </nav>
@@ -54,6 +56,10 @@
           document.body.removeChild(currentScript);
           currentScript = null;
         }
+        const canvasContainer = document.getElementById("canvas-container");
+        if (canvasContainer) {
+          canvasContainer.innerHTML = "";
+        }
       }
 
       function loadSketch(scriptPath) {
@@ -66,15 +72,16 @@
       }
 
       document.getElementById('load-dungeon').addEventListener('click', () => {
-        loadSketch('./js/sketch_dungeon.js');
-      });
-      document.getElementById('load-overworld').addEventListener('click', () => {
-        loadSketch('./js/sketch_overworld.js');
+        loadSketch('js/sketch_dungeon.js');
       });
 
-      // Optional: Auto-load dungeon on first visit
+      document.getElementById('load-overworld').addEventListener('click', () => {
+        loadSketch('js/sketch_overworld.js');
+      });
+
+      // Auto-load Dungeon sketch on first load
       window.addEventListener('DOMContentLoaded', () => {
-        loadSketch('./js/sketch_dungeon.js');
+        loadSketch('js/sketch_dungeon.js');
       });
     </script>
   </main>
