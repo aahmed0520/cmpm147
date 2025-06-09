@@ -2,22 +2,19 @@
 
 let seed = 239;
 
-// Color palette based on the image
 const grassColor = "#2f4f1c";
 const barnColor = "#302c2c";
 const barnLightColor = "#e8b55b";
 const treeColor = "#1a1a1a";
 const bushColor = "#3e5e2f";
 
-// Aurora color variations sampled from the reference image
-const auroraColor1 = "#b2ff5f"; // bright yellow-green
-const auroraColor2 = "#76f0a6"; // minty green
-const auroraColor3 = "#4cb1d6"; // teal-cyan
+const auroraColor1 = "#b2ff5f"; 
+const auroraColor2 = "#76f0a6"; 
+const auroraColor3 = "#4cb1d6"; 
 
 let canvasContainer;
 
 function setup() {
-  // responsive canvas setup
   canvasContainer = $("#canvas-container");
   let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
   canvas.parent("canvas-container");
@@ -36,9 +33,8 @@ function draw() {
   randomSeed(seed);
   noStroke();
 
-  background(10, 10, 20); // dark night sky
+  background(10, 10, 20);
 
-  // Animated aurora bands using sampled shades
   const numBands = 125;
   for (let i = 0; i < numBands; i++) {
     let baseX = width * random();
