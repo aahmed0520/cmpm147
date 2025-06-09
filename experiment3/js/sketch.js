@@ -2,8 +2,9 @@ let seed = 0;
 let tilesetImage;
 let dungeonGrid = [];
 let overworldGrid = [];
-let numCols = 20;
-let numRows = 20;
+let numCols = 30;
+let numRows = 30;
+let clouds = [];
 
 function preload() {
   tilesetImage = loadImage(
@@ -34,10 +35,7 @@ function draw() {
   background(0);
   randomSeed(seed);
 
-  // Draw dungeon on left
   drawDungeon(dungeonGrid, 0);
-
-  // Draw overworld on right
   drawOverworld(overworldGrid, numCols * 16 + 10);
 }
 
@@ -45,7 +43,37 @@ function placeTile(i, j, ti, tj, offsetX = 0) {
   image(tilesetImage, offsetX + 16 * j, 16 * i, 16, 16, 8 * ti, 8 * tj, 8, 8);
 }
 
-// DUNGEON GENERATOR
+// Utility Functions
+function gridCheck(grid, i, j, target) {
+  return (
+    i >= 0 && j >= 0 && i < grid.length && j < grid[0].length && grid[i][j] === target
+  );
+}
+
+function gridCode(grid, i, j, target) {
+  let north = gridCheck(grid, i - 1, j, target) ? 1 : 0;
+  let south = gridCheck(grid, i + 1, j, target) ? 2 : 0;
+  let east = gridCheck(grid, i, j + 1, target) ? 4 : 0;
+  let west = gridCheck(grid, i, j - 1, target) ? 8 : 0;
+  return north + south + east + west;
+}
+
+const lookup = [
+  [0, 0], [1, 0], [2, 0], [3, 0],
+  [0, 1], [1, 1], [2, 1], [3, 1],
+  [0, 2], [1, 2], [2, 2], [3, 2],
+  [0, 3], [1, 3], [2, 3], [3, 3]
+];
+
+function drawContext(grid, i, j, target, dti, dtj, offsetX) {
+  let code = gridCode(grid, i, j, target);
+  let tile = lookup[code];
+  if (tile) {
+    placeTile(i, j, dti + tile[0], dtj + tile[1], offsetX);
+  }
+}
+
+// Dungeon
 function generateDungeon(cols, rows) {
   let grid = Array.from({ length: rows }, () => Array(cols).fill("_"));
   let rooms = [];
@@ -68,7 +96,6 @@ function generateDungeon(cols, rows) {
     let x = floor(random(1, cols - w - 1));
     let y = floor(random(1, rows - h - 1));
     let newRoom = { x, y, w, h };
-
     if (rooms.some(r => overlaps(r, newRoom))) continue;
 
     rooms.push({ ...newRoom, row: floor(y + h / 2), col: floor(x + w / 2) });
@@ -112,53 +139,135 @@ function drawDungeon(grid, offsetX) {
     for (let j = 0; j < grid[i].length; j++) {
       let cell = grid[i][j];
       if (cell === ".") {
-        placeTile(i, j, 1, 10, offsetX);
+        const options = [ [1, 10], [2, 10], [3, 10] ];
+        let [ti, tj] = random(options);
+        placeTile(i, j, ti, tj, offsetX);
       } else if (cell === "+") {
-        const anim = [ [2, 21], [3, 21], [4, 21] ];
-        const [ti, tj] = anim[floor((frameCount + i + j) / 10) % anim.length];
+        const anim = [ [4, 21], [3, 21], [2, 21] ];
+        let [ti, tj] = anim[floor((frameCount + i + j) / 10) % anim.length];
         placeTile(i, j, ti, tj, offsetX);
       } else {
-        placeTile(i, j, 1, 16, offsetX);
+        const bg = [ [1, 16], [2, 16], [3, 16] ];
+        let [ti, tj] = random(bg);
+        placeTile(i, j, ti, tj, offsetX);
       }
     }
   }
 }
 
-// OVERWORLD GENERATOR
+// Overworld
 function generateOverworld(cols, rows) {
   let grid = Array.from({ length: rows }, () => Array(cols).fill("w"));
   let centers = [];
-  for (let c = 0; c < 2; c++) {
-    let cx = floor(random(cols * 0.2, cols * 0.8));
-    let cy = floor(random(rows * 0.2, rows * 0.8));
-    let biome = c % 2 === 0 ? "g" : "i";
+  for (let c = 0; c < 3; c++) {
+    let tries = 0;
+    let cx, cy;
+    let minDist = 20;
+    do {
+      cx = floor(random(cols * 0.2, cols * 0.8));
+      cy = floor(random(rows * 0.2, rows * 0.8));
+      tries++;
+    } while (
+      centers.some(other => dist(cx, cy, other.x, other.y) < minDist) && tries < 50
+    );
+    let biome = (c % 2 === 0) ? "g" : "i";
     centers.push({ x: cx, y: cy, biome });
   }
 
-  for (let { x, y, biome } of centers) {
-    let radius = 7;
-    for (let i = y - radius; i <= y + radius; i++) {
-      for (let j = x - radius; j <= x + radius; j++) {
+  for (let center of centers) {
+    let { x, y, biome } = center;
+    let maxRadius = 15 + floor(random(5, 10));
+    for (let i = y - maxRadius; i <= y + maxRadius; i++) {
+      for (let j = x - maxRadius; j <= x + maxRadius; j++) {
         if (i < 0 || i >= rows || j < 0 || j >= cols) continue;
+        if (grid[i][j] !== "w") continue;
         let d = dist(j, i, x, y);
-        if (d < radius) grid[i][j] = biome;
+        if (d > maxRadius) continue;
+        let n = noise(i * 0.1, j * 0.1);
+        let falloff = 1 - d / maxRadius;
+        let value = n * falloff;
+        if (value > 0.25) {
+          const neighbors = [
+            grid[i - 1]?.[j],
+            grid[i + 1]?.[j],
+            grid[i]?.[j - 1],
+            grid[i]?.[j + 1]
+          ];
+          const adjacentBiome = neighbors.some(n => n && n !== "w" && n !== biome);
+          if (!adjacentBiome) {
+            grid[i][j] = biome;
+          }
+        }
       }
     }
   }
+
+  clouds = [];
+  for (let c = 0; c < 5; c++) {
+    clouds.push({ x: random(-100, 800), y: random(0, 16 * rows), speed: random(0.1, 0.3) });
+  }
+
   return grid;
 }
 
 function drawOverworld(grid, offsetX) {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
-      let cell = grid[i][j];
-      if (cell === "g") placeTile(i, j, 0, 12, offsetX);
-      else if (cell === "i") placeTile(i, j, 17, 9, offsetX);
-      else {
+      const cell = grid[i][j];
+      if (cell === "g") {
+        let top = !gridCheck(grid, i - 1, j, "g");
+        let bottom = !gridCheck(grid, i + 1, j, "g");
+        let left = !gridCheck(grid, i, j - 1, "g");
+        let right = !gridCheck(grid, i, j + 1, "g");
+        let topleft = top && left;
+        let topright = top && right;
+        let bottomleft = bottom && left;
+        let bottomright = bottom && right;
+        if (topleft) placeTile(i, j, 6, 14, offsetX);
+        else if (topright) placeTile(i, j, 4, 14, offsetX);
+        else if (bottomleft) placeTile(i, j, 6, 12, offsetX);
+        else if (bottomright) placeTile(i, j, 4, 12, offsetX);
+        else if (top) placeTile(i, j, 5, 14, offsetX);
+        else if (bottom) placeTile(i, j, 5, 12, offsetX);
+        else if (left) placeTile(i, j, 6, 13, offsetX);
+        else if (right) placeTile(i, j, 4, 13, offsetX);
+        else {
+          placeTile(i, j, 0, 12, offsetX);
+          if (random() < 0.1) placeTile(i, j, 14, 12, offsetX);
+        }
+      } else if (cell === "i") {
+        let top = !gridCheck(grid, i - 1, j, "i");
+        let bottom = !gridCheck(grid, i + 1, j, "i");
+        let left = !gridCheck(grid, i, j - 1, "i");
+        let right = !gridCheck(grid, i, j + 1, "i");
+        let topleft = top && left;
+        let topright = top && right;
+        let bottomleft = bottom && left;
+        let bottomright = bottom && right;
+        if (topleft) placeTile(i, j, 23, 14, offsetX);
+        else if (topright) placeTile(i, j, 21, 14, offsetX);
+        else if (bottomleft) placeTile(i, j, 23, 12, offsetX);
+        else if (bottomright) placeTile(i, j, 21, 12, offsetX);
+        else if (top) placeTile(i, j, 22, 14, offsetX);
+        else if (bottom) placeTile(i, j, 22, 12, offsetX);
+        else if (left) placeTile(i, j, 23, 13, offsetX);
+        else if (right) placeTile(i, j, 21, 13, offsetX);
+        else drawContext(grid, i, j, "i", 17, 9, offsetX);
+      } else {
         let water = [ [0, 14], [1, 14], [2, 14] ];
-        let [ti, tj] = random(water);
-        placeTile(i, j, ti, tj, offsetX);
+        let tile = (random() < 0.7) ? water[0] : random([water[1], water[2]]);
+        placeTile(i, j, tile[0], tile[1], offsetX);
       }
     }
+  }
+
+  noStroke();
+  fill(100, 100, 100, 80);
+  for (let c of clouds) {
+    ellipse(c.x, c.y, 80, 40);
+    ellipse(c.x + 25, c.y - 10, 60, 30);
+    ellipse(c.x - 25, c.y - 5, 60, 35);
+    c.x += c.speed;
+    if (c.x > width + 100) c.x = -120;
   }
 }
