@@ -1,70 +1,66 @@
-// sketch.js - Combined Dungeon and Overworld Viewer with Buttons
+// sketch.js - purpose and description here
+// Author: Your Name
+// Date:
 
-let tilesetImage;
-let currentGrid = [];
-let viewMode = "overworld";
-let clouds = [];
-let seed = 0;
-let numCols = 30;
-let numRows = 20;
+// Constants - User-servicable parts
+const VALUE1 = 1;
+const VALUE2 = 2;
+
+// Globals
+let myInstance;
 let canvasContainer;
+let centerHorz, centerVert;
 
-function preload() {
-  tilesetImage = loadImage(
-    "https://cdn.glitch.com/25101045-29e2-407a-894c-e0243cd8c7c6%2FtilesetP8.png?v=1611654020438"
-  );
+class MyClass {
+  constructor(param1, param2) {
+    this.property1 = param1;
+    this.property2 = param2;
+  }
+
+  myMethod() {
+    // code to run when method is called
+  }
+}
+
+function resizeScreen() {
+  const containerRect = canvasContainer[0].getBoundingClientRect();
+  const containerWidth = containerRect.width;
+  const containerHeight = containerRect.height;
+
+  centerHorz = containerWidth / 2;
+  centerVert = containerHeight / 2;
+
+  resizeCanvas(containerWidth, containerHeight);
 }
 
 function setup() {
-  canvasContainer = select("#canvasContainer");
-  const canvas = createCanvas(16 * numCols, 16 * numRows);
-  canvas.parent(canvasContainer);
-  noSmooth();
+  canvasContainer = $("#canvas-container");
+  let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
+  canvas.parent("canvas-container");
 
-  createButton("Show Dungeon").parent("controls").mousePressed(() => {
-    viewMode = "dungeon";
-    generateView();
+  myInstance = new MyClass(VALUE1, VALUE2);
+
+  $(window).resize(function () {
+    resizeScreen();
   });
 
-  createButton("Show Overworld").parent("controls").mousePressed(() => {
-    viewMode = "overworld";
-    generateView();
-  });
-
-  createButton("Reseed").parent("controls").mousePressed(() => {
-    seed = (seed | 0) + 1109;
-    randomSeed(seed);
-    noiseSeed(seed);
-    generateView();
-  });
-
-  seed = floor(random(99999));
-  randomSeed(seed);
-  noiseSeed(seed);
-  generateView();
+  resizeScreen();
 }
 
 function draw() {
-  randomSeed(seed);
-  drawView();
-}
+  background(220);
+  myInstance.myMethod();
 
-function generateView() {
-  if (viewMode === "overworld") {
-    currentGrid = generateOverworld(numCols, numRows);
-  } else {
-    currentGrid = generateDungeon(numCols, numRows);
-  }
-}
+  push();
+  translate(centerHorz, centerVert);
+  rotate(frameCount / 100.0);
+  fill(234, 31, 81);
+  noStroke();
+  rect(-125, -125, 250, 250);
+  pop();
 
-function drawView() {
-  if (viewMode === "overworld") {
-    drawOverworld(currentGrid);
-  } else {
-    drawDungeon(currentGrid);
-  }
-}
-
-function placeTile(i, j, ti, tj) {
-  image(tilesetImage, 16 * j, 16 * i, 16, 16, 8 * ti, 8 * tj, 8, 8);
+  fill(255);
+  textStyle(BOLD);
+  textSize(140);
+  text("p5*", centerHorz - 105, centerVert + 40);
 }

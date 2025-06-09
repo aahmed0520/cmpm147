@@ -1,26 +1,8 @@
 /* style.css */
 
-/* Center canvas *inside the container only* */
-#canvasContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px 0;
-    height: auto;
+/* Set the canvas element to be the full size of the container */
+canvas {
     width: 100%;
-  }
-  
-  /* Make canvas crisp and scale cleanly */
-  canvas {
-    image-rendering: pixelated;
-    max-width: 100%;
-    height: auto;
-  }
-  
-  /* DO NOT center the whole body; let page flow normally */
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
+    height: 100%;
   }
   

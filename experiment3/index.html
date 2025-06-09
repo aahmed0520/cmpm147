@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Experiment X - Procedural Worlds</title>
+  <title>Experiment X - Subject/Topic</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -12,64 +12,40 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
     crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.js"></script>
 
   <!-- Custom scripts -->
   <script type="text/javascript" src="../js/site.js" defer></script>
   <script type="text/javascript" src="./js/sketch.js" defer></script>
-
-  <style>
-    #canvasContainer {
-      text-align: center;
-      margin: 0 auto;
-    }
-
-    canvas {
-      image-rendering: pixelated;
-      max-width: 100%;
-      height: auto;
-      display: inline-block;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-    }
-
-    #controls {
-      text-align: center;
-      margin-top: 10px;
-    }
-  </style>
 </head>
 
 <body>
   <main id="content">
     <section>
-      <h1>Experiment X - Procedural Worlds</h1>
+      <h1>Experiment X - Subject/Topic</h1>
 
-      <div id="controls" class="minor-section">
-        <!-- Buttons created by sketch.js -->
-      </div>
-
-      <div id="canvasContainer" class="minor-section">
-        <!-- Canvas appears here -->
+      <div class="minor-section">
+        <div id="canvas-container">
+          <!-- canvas will be added here -->
+        </div>
+        <div class="fullscreen-box">
+          <button id="toggle-fullscreen">Fullscreen</button>
+        </div>
       </div>
 
       <div class="minor-section">
         <h2>Description</h2>
-        <p>This project explores procedural generation through the creation of a dungeon and overworld system using tiles.</p>
+        <p>What are you trying to acomplish with this experiment?</p>
       </div>
 
       <div class="minor-section">
         <h2>Technical</h2>
-        <p>Includes grid-based terrain generation, autotiling, random seeds, and animated elements like clouds and dungeon hallways.</p>
+        <p>Describe in detail what you did technically and how it works?</p>
       </div>
 
       <div class="minor-section">
         <h2>Reflection</h2>
-        <p>Reflect here on what was difficult, rewarding, or unexpected during your process!</p>
+        <p>Each person that worked on the code should reflect on the process, the difficulties, and the successes of the experiment.</p>
       </div>
     </section>
 
