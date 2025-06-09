@@ -53,7 +53,7 @@ function gridCode(grid, i, j, target) {
   return north + south + east + west;
 }
 
-const lookup = [
+const lookupOverworld = [
   [0, 0], [1, 0], [2, 0], [3, 0],
   [0, 1], [1, 1], [2, 1], [3, 1],
   [0, 2], [1, 2], [2, 2], [3, 2],
@@ -62,7 +62,7 @@ const lookup = [
 
 function drawContext(grid, i, j, target, dti, dtj) {
   let code = gridCode(grid, i, j, target);
-  let tile = lookup[code];
+  let tile = lookupOverworld[code];
   if (tile) {
     placeTile(i, j, dti + tile[0], dtj + tile[1]);
   }
