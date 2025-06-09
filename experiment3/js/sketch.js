@@ -1,9 +1,13 @@
-// Press 'd' to view the dungeon, 'o' to view the overworld
+// sketch.js - Combined Dungeon and Overworld Viewer with Buttons
 
 let tilesetImage;
 let currentGrid = [];
-let viewMode = "overworld"; 
+let viewMode = "overworld";
 let clouds = [];
+let seed = 0;
+let numCols = 30;
+let numRows = 20;
+let canvasContainer;
 
 function preload() {
   tilesetImage = loadImage(
@@ -12,30 +16,60 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(16 * 30, 16 * 20).parent("canvasContainer");
+  canvasContainer = select("#canvasContainer");
+
+  const canvas = createCanvas(16 * numCols, 16 * numRows);
+  canvas.parent(canvasContainer);
   noSmooth();
+
+  createButton("Show Dungeon").parent("controls").mousePressed(() => {
+    viewMode = "dungeon";
+    generateView();
+  });
+
+  createButton("Show Overworld").parent("controls").mousePressed(() => {
+    viewMode = "overworld";
+    generateView();
+  });
+
+  createButton("Reseed").parent("controls").mousePressed(() => {
+    seed = (seed | 0) + 1109;
+    randomSeed(seed);
+    noiseSeed(seed);
+    generateView();
+  });
+
+  seed = floor(random(99999));
+  randomSeed(seed);
+  noiseSeed(seed);
   generateView();
+
+  centerCanvas();
+}
+
+function windowResized() {
+  centerCanvas();
+}
+
+function centerCanvas() {
+  const canvasElt = select("canvas").elt;
+  const x = (windowWidth - width) / 2;
+  const y = (windowHeight - height) / 2;
+  canvasElt.style.position = "absolute";
+  canvasElt.style.left = `${x}px`;
+  canvasElt.style.top = `${y}px`;
 }
 
 function draw() {
+  randomSeed(seed);
   drawView();
-}
-
-function keyPressed() {
-  if (key === 'd') {
-    viewMode = "dungeon";
-    generateView();
-  } else if (key === 'o') {
-    viewMode = "overworld";
-    generateView();
-  }
 }
 
 function generateView() {
   if (viewMode === "overworld") {
-    currentGrid = generateOverworld(30, 20);
+    currentGrid = generateOverworld(numCols, numRows);
   } else {
-    currentGrid = generateDungeon(30, 20);
+    currentGrid = generateDungeon(numCols, numRows);
   }
 }
 
@@ -50,6 +84,8 @@ function drawView() {
 function placeTile(i, j, ti, tj) {
   image(tilesetImage, 16 * j, 16 * i, 16, 16, 8 * ti, 8 * tj, 8, 8);
 }
+
+
 
 
 
