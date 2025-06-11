@@ -56,7 +56,8 @@ window.engineSketch = function (sketch) {
   };
 
   sketch.setup = () => {
-    sketch.createCanvas(800, 400);
+    let c = sketch.createCanvas(800, 400);
+    c.parent("canvas-holder"); 
 
     camera_offset = sketch.createVector(-sketch.width / 2, sketch.height / 2);
     camera_velocity = sketch.createVector(0, 0);
