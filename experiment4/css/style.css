@@ -10,6 +10,6 @@ body {
   }
   #canvas-container {
     width: 100%;
-    height: 60vh; /* or however tall you want it */
+    height: 90vh; /* or however tall you want it */
     position: relative;
   }
