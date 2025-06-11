@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Experiment 4 - Infinite Desert</title>
+  <title>Experiment 4 - Infinite Worlds</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/site.css" />
@@ -15,10 +15,15 @@
 <body>
   <main id="content">
     <section>
-      <h1>Experiment 4 - Infinite Desert</h1>
+      <h1>Experiment 4 - Infinite Worlds</h1>
 
-      <!-- 🔹 Canvas + World Key Input -->
+      <!-- 🔹 Buttons + Canvas -->
       <div class="minor-section">
+        <div style="margin-bottom: 10px;">
+          <button id="load-desert">Show Desert</button>
+          <button id="load-critter">Show Critter</button>
+        </div>
+
         <div id="canvas-container" class="canvas-box">
           <div id="world-key-controls" style="margin-bottom: 10px;">
             <label for="world-key-input">World key:</label>
@@ -27,41 +32,78 @@
         </div>
       </div>
 
-      <!-- 🔹 Description Section -->
+      <!-- 🔹 Description -->
       <div class="minor-section">
         <h2>Description</h2>
-        <p>
-          Arrow keys scroll. Clicking changes tiles.<br>
-          This generator creates an infinite desert terrain using isometric tiles and procedural terrain types.
-        </p>
+        <p>This generator includes both a desert terrain and a critter crawler that follows apples. Use the buttons above to switch between sketches.</p>
       </div>
 
-      <!-- 🔹 Technical Section -->
+      <!-- 🔹 Technical -->
       <div class="minor-section">
         <h2>Technical</h2>
-        <p>
-          The world uses noise to determine tile types (sand, rock, dust, dune) and applies animated ripple effects based on time. Clicks are tracked per tile using a timestamp. Each world is seeded using a key hashed via xxHash for repeatability.
-        </p>
+        <p>Each sketch is powered by p5 instance mode and uses procedural noise-based generation. Swapping sketches requires careful DOM and canvas cleanup.</p>
       </div>
 
-      <!-- 🔹 Reflection Section -->
+      <!-- 🔹 Reflection -->
       <div class="minor-section">
         <h2>Reflection</h2>
-        <p>
-          I merged engine.js and my_world.js into one `sketch_desert.js` for my portfolio. Moving this over required layout fixes and separating the input and canvas from the description box. It now cleanly integrates into the portfolio format.
-        </p>
+        <p>I structured this project to allow smooth toggling between independent sketches using a shared canvas layout. This required proper use of `new p5(...)` instance setup and cleanup handling.</p>
       </div>
     </section>
 
     <!-- 🔹 Navigation -->
-    <nav id="links" class="minor-section">
+    <nav class="minor-section">
       <ul>
         <li><a href="../index.html">Home</a></li>
       </ul>
     </nav>
-
-    <!-- 🔹 Your Sketch -->
-    <script src="js/sketch_critter.js"></script>
   </main>
+
+  <!-- 🔹 Sketch Loader Script -->
+  <script>
+    let currentSketch = null;
+
+    function unloadCurrentSketch() {
+      if (currentSketch && currentSketch.remove) {
+        currentSketch.remove();
+        currentSketch = null;
+      }
+
+      const canvasContainer = document.getElementById("canvas-container");
+      if (canvasContainer) {
+        canvasContainer.innerHTML = `
+          <div id="world-key-controls" style="margin-bottom: 10px;">
+            <label for="world-key-input">World key:</label>
+            <input id="world-key-input" type="text" value="xyzzy" />
+          </div>
+        `;
+      }
+    }
+
+    document.getElementById("load-desert").addEventListener("click", () => {
+      unloadCurrentSketch();
+      const script = document.createElement("script");
+      script.src = "js/sketch_desert.js";
+      document.body.appendChild(script);
+    });
+
+    document.getElementById("load-critter").addEventListener("click", () => {
+      unloadCurrentSketch();
+      const script = document.createElement("script");
+      script.src = "js/sketch_critter.js";
+      document.body.appendChild(script);
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      // Default sketch
+      const script = document.createElement("script");
+      script.src = "js/sketch_desert.js";
+      document.body.appendChild(script);
+    });
+
+    // This makes both sketch files assign their instance to `currentSketch`
+    // Example inside sketch_critter.js or sketch_desert.js:
+    // currentSketch = new p5(critterSketch, 'canvas-container');
+  </script>
 </body>
 </html>
