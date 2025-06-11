@@ -1,56 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Experiment 4 - Infinite Worlds</title>
+  <title>Experiment 4 - Infinite Desert</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/site.css" />
   <link rel="stylesheet" href="css/style.css" />
-  <style>
-    #canvas-container {
-      width: 800px;
-      height: 400px;
-      background: #222;
-    }
-  </style>
 
   <!-- JS Libraries -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
   <script src="js/xxhash.min.js"></script>
 </head>
 <body>
   <main id="content">
     <section>
-      <h1>Experiment 4 - Infinite Worlds</h1>
+      <h1>Experiment 4 - Infinite Desert</h1>
 
       <div class="minor-section">
-        <div style="margin-bottom: 10px;">
-          <button id="load-gen1">Show Desert</button>
-          <button id="load-gen2">Show City</button>
-          <button id="load-gen3">Show Caterpillar Crawl</button>
-        </div>
-
-        <!-- ✅ FIXED: #container is now nested inside #canvas-container -->
-        <div id="canvas-container" class="canvas-box">
-          <div id="canvas-holder"></div>  
-          <div id="container"></div>
-        </div>
+        <div id="canvas-container" class="canvas-box"></div>
       </div>
 
       <div class="minor-section">
         <h2>Description</h2>
-        <p>This page showcases three infinite world generators developed in p5.js. Toggle between them to explore each unique variation.</p>
+        <p>This generator creates an infinite desert terrain with rocky, dusty, and dune-based regions that shift based on spatial and key-based variation. The tiles respond to clicks and animate with drifting sand over time.</p>
       </div>
 
       <div class="minor-section">
         <h2>Technical</h2>
-        <p>Each generator is implemented in a separate file and run in isolation using p5.js instances. The worlds respond to key input and mouse clicks, and allow for user-controlled seeds to deterministically generate infinite tilemaps.</p>
+        <p>The world uses isometric tiles with height variation via noise. The terrain texture is procedurally generated, and time-based animation adds dynamic ripples to dune tiles. Each world key produces a unique yet reproducible terrain layout using xxHash.</p>
       </div>
 
       <div class="minor-section">
         <h2>Reflection</h2>
-        <p>This experiment allowed me to explore variation and interactivity in infinite procedural generation. Each generator uses different spatial variation techniques and click-based interactivity, reflecting different design inspirations.</p>
+        <p>This generator was built off the Infinite Worlds project base. I extended it with height illusion, animated dunes, click-reactive pulses, and multiple tile textures. Moving it to the portfolio required blending engine.js and my_world.js into one sketch, and ensuring dynamic canvas resizing worked properly with jQuery and p5.js integration.</p>
       </div>
     </section>
 
@@ -58,58 +41,7 @@
       <ul><li><a href="../index.html">Home</a></li></ul>
     </nav>
 
-    <!-- Load engine.js *after* canvas-container exists -->
-    <script src="js/engine.js"></script>
-
-    <script>
-      let currentScript = null;
-
-      function unloadCurrentSketch() {
-        if (window.p5instance) {
-          window.p5instance.remove();
-          window.p5instance = null;
-        }
-        if (currentScript) {
-          document.body.removeChild(currentScript);
-          currentScript = null;
-        }
-        const container = document.getElementById("canvas-container");
-        if (container) container.innerHTML = '<div id="container"></div>'; // reset container for UI
-      }
-
-      function loadSketch(scriptPath) {
-        unloadCurrentSketch();
-
-        setTimeout(() => {
-          const container = document.getElementById("canvas-container");
-          if (!container) {
-            console.error("canvas-container not found");
-            return;
-          }
-
-          currentScript = document.createElement("script");
-          currentScript.src = scriptPath;
-          currentScript.onload = () => console.log("Loaded:", scriptPath);
-          document.body.appendChild(currentScript);
-        }, 50);
-      }
-
-      document.getElementById("load-gen1").addEventListener("click", () => {
-        loadSketch("js/sketch_desert.js");
-      });
-
-      document.getElementById("load-gen2").addEventListener("click", () => {
-        loadSketch("js/sketch_city.js");
-      });
-
-      document.getElementById("load-gen3").addEventListener("click", () => {
-        loadSketch("js/sketch_caterpillar_crawl.js");
-      });
-
-      window.addEventListener("DOMContentLoaded", () => {
-        loadSketch("js/sketch_desert.js");
-      }, 100);
-    </script>
+    <script src="js/sketch_desert.js"></script>
   </main>
 </body>
 </html>
