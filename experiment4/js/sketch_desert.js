@@ -20,6 +20,8 @@ window.addEventListener("load", () => {
       worldSeed = XXH.h32(key, 0);
       sketch.noiseSeed(worldSeed);
       sketch.randomSeed(worldSeed);
+      console.log("Seed set:", key);
+
     };
 
     window.p3_tileClicked = function (i, j) {
@@ -30,6 +32,8 @@ window.addEventListener("load", () => {
     window.p3_drawBefore = function () {};
 
     window.p3_drawTile = function (i, j) {
+      console.log("Drawing tile:", i, j);
+
       let n = sketch.noise(i * 0.1, j * 0.1);
       let rockColor = sketch.color('#8AAAB2');
       let dustColor = sketch.color('#CFCFC6');
