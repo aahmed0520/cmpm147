@@ -22,12 +22,10 @@ window.setup = function () {
   camera_offset = new p5.Vector(-width / 2, height / 2);
   camera_velocity = new p5.Vector(0, 0);
 
-  let label = createP("World key: ");
-  label.parent("canvas-container");
-
-  let input = createInput("xyzzy");
-  input.parent(label);
-  input.input(() => rebuildWorld(input.value()));
+  let input = select('#world-key-input');
+  input.input(() => {
+    rebuildWorld(input.value());
+  });
 
   createP("Arrow keys scroll. Clicking changes tiles.").parent("canvas-container");
 
