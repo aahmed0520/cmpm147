@@ -66,11 +66,22 @@
 
       function loadSketch(scriptPath) {
         unloadCurrentSketch();
-        currentScript = document.createElement("script");
-        currentScript.src = scriptPath;
-        currentScript.onload = () => console.log("Loaded:", scriptPath);
-        document.body.appendChild(currentScript);
-      }
+
+        // Delay appending the sketch script slightly to ensure DOM is updated
+        setTimeout(() => {
+            const container = document.getElementById("canvas-container");
+            if (!container) {
+            console.error("canvas-container not found");
+            return;
+            }
+
+            currentScript = document.createElement("script");
+            currentScript.src = scriptPath;
+            currentScript.onload = () => console.log("Loaded:", scriptPath);
+            document.body.appendChild(currentScript);
+        }, 50); // short delay ensures DOM is stable
+        }
+
 
       document.getElementById("load-gen1").addEventListener("click", () => {
         loadSketch("js/sketch_desert.js");
