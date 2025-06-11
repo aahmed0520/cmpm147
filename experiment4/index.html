@@ -17,45 +17,41 @@
     <section>
       <h1>Experiment 4 - Infinite Desert</h1>
 
-      <main id="content">
-        <section>
-          <h1>Experiment 4 - Infinite Desert</h1>
-      
-          <!-- 🔹 First minor-section: Canvas + World Key Input -->
-          <div class="minor-section">
-            <div id="canvas-container" class="canvas-box">
-              <div id="world-key-controls" style="margin-bottom: 10px;">
-                <label for="world-key-input">World key:</label>
-                <input id="world-key-input" type="text" value="xyzzy" />
-              </div>
-            </div>
+      <!-- 🔹 First minor-section: Canvas + World Key Input -->
+      <div class="minor-section">
+        <div id="canvas-container" class="canvas-box">
+          <div id="world-key-controls" style="margin-bottom: 10px;">
+            <label for="world-key-input">World key:</label>
+            <input id="world-key-input" type="text" value="xyzzy" />
           </div>
-      
-          <!-- 🔹 Second minor-section: Description -->
-          <div class="minor-section">
-            <h2>Description</h2>
-            <p>This generator creates an infinite desert terrain...</p>
-          </div>
-      
-          <!-- 🔹 Third minor-section: Technical -->
-          <div class="minor-section">
-            <h2>Technical</h2>
-            <p>The world uses isometric tiles with height variation...</p>
-          </div>
-      
-          <!-- 🔹 Fourth minor-section: Reflection -->
-          <div class="minor-section">
-            <h2>Reflection</h2>
-            <p>This generator was built off the Infinite Worlds base...</p>
-          </div>
-        </section>
-      
-        <nav id="links" class="minor-section">
-          <ul><li><a href="../index.html">Home</a></li></ul>
-        </nav>
-      
-        <script src="js/sketch_desert.js"></script>
-      </main>
-      
+        </div>
+      </div>
+
+      <!-- 🔹 Second minor-section: Description -->
+      <div class="minor-section">
+        <h2>Description</h2>
+        <p>Arrow keys scroll. Clicking changes tiles.<br>
+        This generator creates an infinite desert terrain using isometric tiles and noise-based textures. Each tile reacts to clicks and exhibits movement via animated sand ripples.</p>
+      </div>
+
+      <!-- 🔹 Third minor-section: Technical -->
+      <div class="minor-section">
+        <h2>Technical</h2>
+        <p>This world uses deterministic tile rendering using a hashed world key (via xxHash). Noise influences both terrain types and visual effects. Animated dunes use time-based sine waves, while rock cracks are procedurally placed.</p>
+      </div>
+
+      <!-- 🔹 Fourth minor-section: Reflection -->
+      <div class="minor-section">
+        <h2>Reflection</h2>
+        <p>This was built by combining engine.js and my_world.js into a single sketch. Setting up the canvas with proper layout and input took extra CSS work, but resulted in a clean portfolio integration.</p>
+      </div>
+    </section>
+
+    <nav id="links" class="minor-section">
+      <ul><li><a href="../index.html">Home</a></li></ul>
+    </nav>
+
+    <script src="js/sketch_desert.js"></script>
+  </main>
 </body>
 </html>
