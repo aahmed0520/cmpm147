@@ -22,6 +22,7 @@
         <div style="margin-bottom: 10px;">
           <button id="load-desert">Show Desert</button>
           <button id="load-critter">Show Critter</button>
+          <button id="load-city">Show City</button>
         </div>
 
         <div id="canvas-container" class="canvas-box">
@@ -35,19 +36,25 @@
       <!-- 🔹 Description -->
       <div class="minor-section">
         <h2>Description</h2>
-        <p>This generator includes both a desert terrain and a critter crawler that follows apples. Use the buttons above to switch between sketches.</p>
+        <p>
+          This generator includes three interactive sketches: a desert terrain, a critter crawler that follows apples, and a procedural city builder. Use the buttons above to switch between them.
+        </p>
       </div>
 
       <!-- 🔹 Technical -->
       <div class="minor-section">
         <h2>Technical</h2>
-        <p>Each sketch is powered by p5 instance mode and uses procedural noise-based generation. Swapping sketches requires careful DOM and canvas cleanup.</p>
+        <p>
+          Each sketch is written in p5.js instance mode and uses procedural generation with seeded hashing for consistent results. The system swaps between self-contained instances with DOM cleanup.
+        </p>
       </div>
 
       <!-- 🔹 Reflection -->
       <div class="minor-section">
         <h2>Reflection</h2>
-        <p>I structured this project to allow smooth toggling between independent sketches using a shared canvas layout. This required proper use of `new p5(...)` instance setup and cleanup handling.</p>
+        <p>
+          Building this system required instance isolation using `new p5(...)`, automatic cleanup between sketches, and shared input functionality. Each sketch retains procedural consistency via world keys.
+        </p>
       </div>
     </section>
 
@@ -80,30 +87,28 @@
       }
     }
 
-    document.getElementById("load-desert").addEventListener("click", () => {
+    function loadSketch(path) {
       unloadCurrentSketch();
       const script = document.createElement("script");
-      script.src = "js/sketch_desert.js";
+      script.src = path;
       document.body.appendChild(script);
+    }
+
+    document.getElementById("load-desert").addEventListener("click", () => {
+      loadSketch("js/sketch_desert.js");
     });
 
     document.getElementById("load-critter").addEventListener("click", () => {
-      unloadCurrentSketch();
-      const script = document.createElement("script");
-      script.src = "js/sketch_critter.js";
-      document.body.appendChild(script);
+      loadSketch("js/sketch_critter.js");
+    });
+
+    document.getElementById("load-city").addEventListener("click", () => {
+      loadSketch("js/sketch_city.js");
     });
 
     window.addEventListener("DOMContentLoaded", () => {
-      // Default sketch
-      const script = document.createElement("script");
-      script.src = "js/sketch_desert.js";
-      document.body.appendChild(script);
+      loadSketch("js/sketch_desert.js"); // Default sketch
     });
-
-    // This makes both sketch files assign their instance to `currentSketch`
-    // Example inside sketch_critter.js or sketch_desert.js:
-    // currentSketch = new p5(critterSketch, 'canvas-container');
   </script>
 </body>
 </html>
