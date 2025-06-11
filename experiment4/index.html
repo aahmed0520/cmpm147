@@ -17,7 +17,7 @@
     <section>
       <h1>Experiment 4 - Infinite Desert</h1>
 
-      <!-- 🔹 First minor-section: Canvas + World Key Input -->
+      <!-- 🔹 Canvas + World Key Input -->
       <div class="minor-section">
         <div id="canvas-container" class="canvas-box">
           <div id="world-key-controls" style="margin-bottom: 10px;">
@@ -27,30 +27,40 @@
         </div>
       </div>
 
-      <!-- 🔹 Second minor-section: Description -->
+      <!-- 🔹 Description Section -->
       <div class="minor-section">
         <h2>Description</h2>
-        <p>Arrow keys scroll. Clicking changes tiles.<br>
-        This generator creates an infinite desert terrain using isometric tiles and noise-based textures. Each tile reacts to clicks and exhibits movement via animated sand ripples.</p>
+        <p>
+          Arrow keys scroll. Clicking changes tiles.<br>
+          This generator creates an infinite desert terrain using isometric tiles and procedural terrain types.
+        </p>
       </div>
 
-      <!-- 🔹 Third minor-section: Technical -->
+      <!-- 🔹 Technical Section -->
       <div class="minor-section">
         <h2>Technical</h2>
-        <p>This world uses deterministic tile rendering using a hashed world key (via xxHash). Noise influences both terrain types and visual effects. Animated dunes use time-based sine waves, while rock cracks are procedurally placed.</p>
+        <p>
+          The world uses noise to determine tile types (sand, rock, dust, dune) and applies animated ripple effects based on time. Clicks are tracked per tile using a timestamp. Each world is seeded using a key hashed via xxHash for repeatability.
+        </p>
       </div>
 
-      <!-- 🔹 Fourth minor-section: Reflection -->
+      <!-- 🔹 Reflection Section -->
       <div class="minor-section">
         <h2>Reflection</h2>
-        <p>This was built by combining engine.js and my_world.js into a single sketch. Setting up the canvas with proper layout and input took extra CSS work, but resulted in a clean portfolio integration.</p>
+        <p>
+          I merged engine.js and my_world.js into one `sketch_desert.js` for my portfolio. Moving this over required layout fixes and separating the input and canvas from the description box. It now cleanly integrates into the portfolio format.
+        </p>
       </div>
     </section>
 
+    <!-- 🔹 Navigation -->
     <nav id="links" class="minor-section">
-      <ul><li><a href="../index.html">Home</a></li></ul>
+      <ul>
+        <li><a href="../index.html">Home</a></li>
+      </ul>
     </nav>
 
+    <!-- 🔹 Your Sketch -->
     <script src="js/sketch_desert.js"></script>
   </main>
 </body>
