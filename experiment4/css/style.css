@@ -8,3 +8,8 @@ body {
     font-style: italic;
     color: #373fff;
   }
+  #canvas-container {
+    width: 100%;
+    height: 600px; /* or however tall you want it */
+    position: relative;
+  }
