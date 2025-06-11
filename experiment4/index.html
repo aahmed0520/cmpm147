@@ -30,8 +30,11 @@
           <button id="load-gen2">Show City</button>
           <button id="load-gen3">Show Caterpillar Crawl</button>
         </div>
-        <div id="canvas-container" class="canvas-box"></div>
+
+        <!-- ✅ FIXED: #container is now nested inside #canvas-container -->
+        <div id="canvas-container" class="canvas-box">
           <div id="container"></div>
+        </div>
       </div>
 
       <div class="minor-section">
@@ -70,7 +73,7 @@
           currentScript = null;
         }
         const container = document.getElementById("canvas-container");
-        if (container) container.innerHTML = "";
+        if (container) container.innerHTML = '<div id="container"></div>'; // reset container for UI
       }
 
       function loadSketch(scriptPath) {
