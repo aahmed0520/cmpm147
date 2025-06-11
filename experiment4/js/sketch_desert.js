@@ -1,11 +1,25 @@
-new p5(() => {
+new p5((sketch) => {
     "use strict";
   
     /* global XXH */
   
-    window.p3_preload = function () {};
+    // These functions get used by engine.js
+    sketch.preload = function () {
+      window.p3_preload?.();
+    };
   
-    window.p3_setup = function () {};
+    sketch.setup = function () {
+      window.p3_setup?.();
+    };
+  
+    sketch.draw = function () {
+      // noop – draw is handled by engine.js
+    };
+  
+    sketch.mouseClicked = function () {
+      window.mouseClicked?.(); // engine.js defines mouseClicked globally
+      return false;
+    };
   
     window.p3_tileWidth = () => 32;
     window.p3_tileHeight = () => 16;
@@ -16,113 +30,115 @@ new p5(() => {
   
     window.p3_worldKeyChanged = function (key) {
       worldSeed = XXH.h32(key, 0);
-      noiseSeed(worldSeed);
-      randomSeed(worldSeed);
+      sketch.noiseSeed(worldSeed);
+      sketch.randomSeed(worldSeed);
     };
+  
+    window.p3_setup = function () {};
   
     window.p3_tileClicked = function (i, j) {
       let key = [i, j];
-      clicks[key] = millis(); // store time of click
+      clicks[key] = sketch.millis(); // store time of click
     };
   
     window.p3_drawBefore = function () {};
   
     window.p3_drawTile = function (i, j) {
-      let n = noise(i * 0.1, j * 0.1);
-      let rockColor = color('#8AAAB2');
-      let dustColor = color('#CFCFC6');
-      let rustColor = color('#B86D46');
-      let duneColor = color('#6B3E2E');
+      let n = sketch.noise(i * 0.1, j * 0.1);
+      let rockColor = sketch.color("#8AAAB2");
+      let dustColor = sketch.color("#CFCFC6");
+      let rustColor = sketch.color("#B86D46");
+      let duneColor = sketch.color("#6B3E2E");
   
-      if (n < 0.35) fill(dustColor);
-      else if (n < 0.55) fill(rustColor);
-      else if (n < 0.75) fill(rockColor);
-      else fill(duneColor);
+      if (n < 0.35) sketch.fill(dustColor);
+      else if (n < 0.55) sketch.fill(rustColor);
+      else if (n < 0.75) sketch.fill(rockColor);
+      else sketch.fill(duneColor);
   
-      push();
+      sketch.push();
   
-      let h = (noise(i * 0.15 + 100, j * 0.15 + 100) - 0.5) * 12;
-      let top = (noise(i + 1, j + 1) - 0.5) * 10;
-      let right = (noise(i + 2, j) - 0.5) * 10;
-      let bottom = (noise(i - 1, j - 2) - 0.5) * 10;
-      let left = (noise(i, j + 3) - 0.5) * 10;
+      let h = (sketch.noise(i * 0.15 + 100, j * 0.15 + 100) - 0.5) * 12;
+      let top = (sketch.noise(i + 1, j + 1) - 0.5) * 10;
+      let right = (sketch.noise(i + 2, j) - 0.5) * 10;
+      let bottom = (sketch.noise(i - 1, j - 2) - 0.5) * 10;
+      let left = (sketch.noise(i, j + 3) - 0.5) * 10;
   
       // Shadow
-      push();
-      noStroke();
-      fill(0, 0, 0, 40);
-      beginShape();
-      vertex(-tw + 2, 0 + left + h + 4);
-      vertex(0 + 2, th + bottom + h + 4);
-      vertex(tw + 2, 0 + right + h + 4);
-      vertex(0 + 2, -th + top + h + 4);
-      endShape(CLOSE);
-      pop();
+      sketch.push();
+      sketch.noStroke();
+      sketch.fill(0, 0, 0, 40);
+      sketch.beginShape();
+      sketch.vertex(-tw + 2, 0 + left + h + 4);
+      sketch.vertex(0 + 2, th + bottom + h + 4);
+      sketch.vertex(tw + 2, 0 + right + h + 4);
+      sketch.vertex(0 + 2, -th + top + h + 4);
+      sketch.endShape(sketch.CLOSE);
+      sketch.pop();
   
       // Main shape
-      noStroke();
-      beginShape();
-      vertex(-tw, 0 + left + h);
-      vertex(0, th + bottom + h);
-      vertex(tw, 0 + right + h);
-      vertex(0, -th + top + h);
-      endShape(CLOSE);
+      sketch.noStroke();
+      sketch.beginShape();
+      sketch.vertex(-tw, 0 + left + h);
+      sketch.vertex(0, th + bottom + h);
+      sketch.vertex(tw, 0 + right + h);
+      sketch.vertex(0, -th + top + h);
+      sketch.endShape(sketch.CLOSE);
   
       // Dune ripple animation
       if (n >= 0.75) {
-        stroke(60, 30, 20, 180);
-        strokeWeight(1);
-        noFill();
-        let t = millis() * 0.0002;
+        sketch.stroke(60, 30, 20, 180);
+        sketch.strokeWeight(1);
+        sketch.noFill();
+        let t = sketch.millis() * 0.0002;
   
         for (let r = -th + 4; r < th - 4; r += 6) {
-          beginShape();
+          sketch.beginShape();
           for (let x = -tw + 2; x <= tw - 2; x += 4) {
-            let wave = sin((i + x) * 0.3 + (j + r) * 0.2 + t) * 2;
+            let wave = Math.sin((i + x) * 0.3 + (j + r) * 0.2 + t) * 2;
             let y = r + wave;
-            curveVertex(x, y + h);
+            sketch.curveVertex(x, y + h);
           }
-          endShape();
+          sketch.endShape();
         }
       }
   
       // Rock cracks
       if (n >= 0.55 && n < 0.75) {
-        stroke(30, 30, 30, 80);
-        strokeWeight(0.5);
-        randomSeed(XXH.h32("crack:" + [i, j], worldSeed));
+        sketch.stroke(30, 30, 30, 80);
+        sketch.strokeWeight(0.5);
+        sketch.randomSeed(XXH.h32("crack:" + [i, j], worldSeed));
         for (let k = 0; k < 2; k++) {
-          let x1 = random(-tw * 0.8, tw * 0.8);
-          let y1 = random(-th, th);
-          let x2 = x1 + random(-5, 5);
-          let y2 = y1 + random(-5, 5);
-          line(x1, y1 + h, x2, y2 + h);
+          let x1 = sketch.random(-tw * 0.8, tw * 0.8);
+          let y1 = sketch.random(-th, th);
+          let x2 = x1 + sketch.random(-5, 5);
+          let y2 = y1 + sketch.random(-5, 5);
+          sketch.line(x1, y1 + h, x2, y2 + h);
         }
       }
   
       // Click glow
       let t = clicks[[i, j]];
       if (t !== undefined) {
-        let pulse = sin((millis() - t) / 300.0) * 5 + 7;
-        fill(200, 255, 255, 180);
-        ellipse(0, 0 + h, pulse, pulse / 2);
+        let pulse = Math.sin((sketch.millis() - t) / 300.0) * 5 + 7;
+        sketch.fill(200, 255, 255, 180);
+        sketch.ellipse(0, 0 + h, pulse, pulse / 2);
       }
   
-      pop();
+      sketch.pop();
     };
   
     window.p3_drawSelectedTile = function (i, j) {
-      noFill();
-      stroke(0, 255, 0, 128);
-      beginShape();
-      vertex(-tw, 0);
-      vertex(0, th);
-      vertex(tw, 0);
-      vertex(0, -th);
-      endShape(CLOSE);
-      noStroke();
-      fill(0);
-      text("tile " + [i, j], 0, 0);
+      sketch.noFill();
+      sketch.stroke(0, 255, 0, 128);
+      sketch.beginShape();
+      sketch.vertex(-tw, 0);
+      sketch.vertex(0, th);
+      sketch.vertex(tw, 0);
+      sketch.vertex(0, -th);
+      sketch.endShape(sketch.CLOSE);
+      sketch.noStroke();
+      sketch.fill(0);
+      sketch.text("tile " + [i, j], 0, 0);
     };
   
     window.p3_drawAfter = function () {};
