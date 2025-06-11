@@ -13,3 +13,9 @@ body {
     height: 600; /* or however tall you want it */
     position: relative;
   }
+  .minor-section:first-of-type {
+    min-height: 900px; /* or however tall you want the full box */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
