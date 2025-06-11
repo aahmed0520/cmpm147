@@ -62,30 +62,30 @@ function preload() {
 }
 
 function setup() {
-  let canvas = createCanvas(800, 400);
-  canvas.parent("canvas-container");
-
-  camera_offset = new p5.Vector(-width / 2, height / 2);
-  camera_velocity = new p5.Vector(0, 0);
-
-  if (window.p3_setup) {
-    window.p3_setup();
-  }
-
-  let label = createP();
-  label.html("World key: ");
-  label.parent("container");
-
-  let input = createInput("xyzzy");
-  input.parent(label);
-  input.input(() => {
+    createCanvas(800, 400); // ✅ FIXED — removed canvas.parent()
+  
+    camera_offset = new p5.Vector(-width / 2, height / 2);
+    camera_velocity = new p5.Vector(0, 0);
+  
+    if (window.p3_setup) {
+      window.p3_setup();
+    }
+  
+    let label = createP();
+    label.html("World key: ");
+    label.parent("container");
+  
+    let input = createInput("xyzzy");
+    input.parent(label);
+    input.input(() => {
+      rebuildWorld(input.value());
+    });
+  
+    createP("Arrow keys scroll. Clicking changes tiles.").parent("container");
+  
     rebuildWorld(input.value());
-  });
-
-  createP("Arrow keys scroll. Clicking changes tiles.").parent("container");
-
-  rebuildWorld(input.value());
-}
+  }
+  
 
 function rebuildWorld(key) {
   if (window.p3_worldKeyChanged) {
