@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Experiment 4 - Infinite Worlds</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../css/site.css" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- JS Libraries -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
+  <script src="js/xxhash.min.js"></script>
+  <script src="js/engine.js"></script>
+</head>
+<body>
+  <main id="content">
+    <section>
+      <h1>Experiment 4 - Infinite Worlds</h1>
+
+      <div class="minor-section">
+        <div style="margin-bottom: 10px;">
+          <button id="load-gen1">Show Desert</button>
+          <button id="load-gen2">Show City</button>
+          <button id="load-gen3">Show Caterpillar Crawl</button>
+        </div>
+        <div id="canvas-container" class="canvas-box"></div>
+      </div>
+
+      <div class="minor-section">
+        <h2>Description</h2>
+        <p>This page showcases three infinite world generators developed in p5.js. Toggle between them to explore each unique variation.</p>
+      </div>
+
+      <div class="minor-section">
+        <h2>Technical</h2>
+        <p>Each generator is implemented in a separate file and run in isolation using p5.js instances. The worlds respond to key input and mouse clicks, and allow for user-controlled seeds to deterministically generate infinite tilemaps.</p>
+      </div>
+
+      <div class="minor-section">
+        <h2>Reflection</h2>
+        <p>This experiment allowed me to explore variation and interactivity in infinite procedural generation. Each generator uses different spatial variation techniques and click-based interactivity, reflecting different design inspirations.</p>
+      </div>
+    </section>
+
+    <nav id="links" class="minor-section">
+      <ul><li><a href="../index.html">Home</a></li></ul>
+    </nav>
+
+    <script>
+      let currentScript = null;
+      let p5instance = null;
+
+      function unloadCurrentSketch() {
+        if (p5instance) {
+          p5instance.remove();
+          p5instance = null;
+        }
+        if (currentScript) {
+          document.body.removeChild(currentScript);
+          currentScript = null;
+        }
+        const container = document.getElementById("canvas-container");
+        if (container) container.innerHTML = "";
+      }
+
+      function loadSketch(scriptPath) {
+        unloadCurrentSketch();
+        currentScript = document.createElement("script");
+        currentScript.src = scriptPath;
+        currentScript.onload = () => console.log("Loaded:", scriptPath);
+        document.body.appendChild(currentScript);
+      }
+
+      document.getElementById("load-gen1").addEventListener("click", () => {
+        loadSketch("js/sketch_desert.js");
+      });
+
+      document.getElementById("load-gen2").addEventListener("click", () => {
+        loadSketch("js/sketch_city.js");
+      });
+
+      document.getElementById("load-gen3").addEventListener("click", () => {
+        loadSketch("js/sketch_caterpillar_crawl.js");
+      });
+
+      window.addEventListener("DOMContentLoaded", () => {
+        loadSketch("js/sketch_desert.js"); // load first one by default
+      });
+    </script>
+  </main>
+</body>
+</html>
