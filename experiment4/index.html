@@ -12,7 +12,6 @@
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
   <script src="js/xxhash.min.js"></script>
 </head>
-
 <body>
   <main id="content">
     <section>
@@ -46,47 +45,45 @@
     <nav id="links" class="minor-section">
       <ul><li><a href="../index.html">Home</a></li></ul>
     </nav>
-  </main>
 
-  <!-- Scripts go LAST -->
-  <script src="js/engine.js"></script>
+    <!-- Load engine.js *after* canvas-container exists -->
+    <script src="js/engine.js"></script>
 
-  <script>
-    let currentScript = null;
-    let p5instance = null;
+    <script>
+      let currentScript = null;
+      let p5instance = null;
 
-    function unloadCurrentSketch() {
-      if (p5instance) {
-        p5instance.remove();
-        p5instance = null;
-      }
-      if (currentScript) {
-        document.body.removeChild(currentScript);
-        currentScript = null;
-      }
-      const container = document.getElementById("canvas-container");
-      if (container) container.innerHTML = "";
-    }
-
-    function loadSketch(scriptPath) {
-      unloadCurrentSketch();
-
-      setTimeout(() => {
-        const container = document.getElementById("canvas-container");
-        if (!container) {
-          console.error("canvas-container not found");
-          return;
+      function unloadCurrentSketch() {
+        if (p5instance) {
+          p5instance.remove();
+          p5instance = null;
         }
+        if (currentScript) {
+          document.body.removeChild(currentScript);
+          currentScript = null;
+        }
+        const container = document.getElementById("canvas-container");
+        if (container) container.innerHTML = "";
+      }
 
-        currentScript = document.createElement("script");
-        currentScript.src = scriptPath;
-        currentScript.onload = () => console.log("Loaded:", scriptPath);
-        document.body.appendChild(currentScript);
-      }, 50);
-    }
+      function loadSketch(scriptPath) {
+        unloadCurrentSketch();
 
-    window.addEventListener("DOMContentLoaded", () => {
-      // Attach button events
+        // Delay appending the sketch script slightly to ensure DOM is updated
+        setTimeout(() => {
+          const container = document.getElementById("canvas-container");
+          if (!container) {
+            console.error("canvas-container not found");
+            return;
+          }
+
+          currentScript = document.createElement("script");
+          currentScript.src = scriptPath;
+          currentScript.onload = () => console.log("Loaded:", scriptPath);
+          document.body.appendChild(currentScript);
+        }, 50); // short delay ensures DOM is stable
+      }
+
       document.getElementById("load-gen1").addEventListener("click", () => {
         loadSketch("js/sketch_desert.js");
       });
@@ -99,9 +96,10 @@
         loadSketch("js/sketch_caterpillar_crawl.js");
       });
 
-      // Load default
-      loadSketch("js/sketch_desert.js");
-    });
-  </script>
+      window.addEventListener("DOMContentLoaded", () => {
+        loadSketch("js/sketch_desert.js"); // load first one by default
+      });
+    </script>
+  </main>
 </body>
 </html>
