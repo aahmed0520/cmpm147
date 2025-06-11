@@ -16,6 +16,13 @@ var citySketch = function(p) {
   let lampMap = new Set();
   let [tw, th] = [tile_width_step_main, tile_height_step_main];
 
+  function resizeScreen() {
+    let canvasContainer = p.select("#canvas-container");
+    let height = p.select(".minor-section").elt.offsetHeight;
+    p.resizeCanvas(canvasContainer.width, height);
+    rebuildWorld(p.select("#world-key-input").value());
+  }
+
   p.setup = function () {
     let canvasContainer = p.select("#canvas-container");
     let height = p.select(".minor-section").elt.offsetHeight;
@@ -25,12 +32,15 @@ var citySketch = function(p) {
     camera_offset = p.createVector(-p.width / 2, p.height / 2);
     camera_velocity = p.createVector(0, 0);
 
+    p.textAlign(p.CENTER, p.CENTER);
+    p.rectMode(p.CENTER);
+    p.textFont("monospace", 12);
+
     let input = p.select("#world-key-input");
     input.input(() => rebuildWorld(input.value()));
-
     p.createP("Arrow keys scroll. Clicking changes tiles.").parent("canvas-container");
-    rebuildWorld(input.value());
 
+    rebuildWorld(input.value());
     p.windowResized = resizeScreen;
     resizeScreen();
   };
@@ -71,8 +81,8 @@ var citySketch = function(p) {
     if (camera_velocity.mag() < 0.01) camera_velocity.setMag(0);
 
     let world_offset = cameraToWorldOffset([camera_offset.x, camera_offset.y]);
-    p.background(100);
 
+    p.background(100);
     combineBuildings();
     processMergeQueue();
 
@@ -154,8 +164,8 @@ var citySketch = function(p) {
     return [[i + 1, j], [i - 1, j], [i, j + 1], [i, j - 1]].some(([x, y]) => isRoadTile(x, y));
   }
 
-  function drawTile([i, j], [camera_x, camera_y]) {
-    let [sx, sy] = worldToScreen([i, j], [camera_x, camera_y]);
+  function drawTile([i, j], [cx, cy]) {
+    let [sx, sy] = worldToScreen([i, j], [cx, cy]);
     p.push();
     p.translate(0 - sx, sy);
 
@@ -175,14 +185,10 @@ var citySketch = function(p) {
     p.pop();
   }
 
-  function describeMouseTile([i, j], [camera_x, camera_y]) {
-    let [sx, sy] = worldToScreen([i, j], [camera_x, camera_y]);
-    drawTileDescription([i, j], [0 - sx, sy]);
-  }
-
-  function drawTileDescription([i, j], [sx, sy]) {
+  function describeMouseTile([i, j], [cx, cy]) {
+    let [sx, sy] = worldToScreen([i, j], [cx, cy]);
     p.push();
-    p.translate(sx, sy);
+    p.translate(0 - sx, sy);
     p.noFill();
     p.stroke(0, 255, 0, 128);
     p.beginShape();
@@ -218,10 +224,8 @@ var citySketch = function(p) {
     for (let i = 0; i < level; i++) {
       p.fill(shadowColor[level - 1]);
       p.quad(-tw, 0, 0, th, 0, th - wallHeight, -tw, -wallHeight);
-
       p.fill(baseColor[level - 1]);
       p.quad(tw, 0, 0, th, 0, th - wallHeight, tw, -wallHeight);
-
       p.translate(0, -wallHeight);
     }
 
@@ -255,13 +259,6 @@ var citySketch = function(p) {
     let wy = cy / (tile_height_step_main * 2);
     return { x: Math.round(wx), y: Math.round(wy) };
   }
-
-  function resizeScreen() {
-    let canvasContainer = p.select("#canvas-container");
-    let height = p.select(".minor-section").elt.offsetHeight;
-    p.resizeCanvas(canvasContainer.width, height);
-    rebuildWorld(p.select("#world-key-input").value());
-  }
 };
 
-var currentSketch = new p5(citySketch, 'canvas-container');
+var myp5_city = new p5(citySketch, 'canvas-container');
