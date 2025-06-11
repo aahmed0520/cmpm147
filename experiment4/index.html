@@ -90,28 +90,35 @@
         }
       }
 
-      function loadSketch(scriptPath) {
+      function loadSketch(scriptPath, sketchFunctionName) {
         unloadCurrentSketch();
         currentScript = document.createElement('script');
         currentScript.src = scriptPath;
-        currentScript.onload = () => console.log(scriptPath + ' loaded.');
+        currentScript.onload = () => {
+          console.log(`${scriptPath} loaded.`);
+          if (typeof window[sketchFunctionName] === 'function') {
+            p5instance = new p5(window[sketchFunctionName]);
+          } else {
+            console.error(`Sketch function ${sketchFunctionName} not found.`);
+          }
+        };
         document.body.appendChild(currentScript);
       }
 
       document.getElementById('load-desert').addEventListener('click', () => {
-        loadSketch('js/sketch_desert.js');
+        loadSketch('js/sketch_desert.js', 'sketch_desert');
       });
 
       document.getElementById('load-critter').addEventListener('click', () => {
-        loadSketch('js/sketch_critter.js');
+        loadSketch('js/sketch_critter.js', 'sketch_critter');
       });
 
       document.getElementById('load-city').addEventListener('click', () => {
-        loadSketch('js/sketch_city.js');
+        loadSketch('js/sketch_city.js', 'sketch_city');
       });
 
       window.addEventListener('DOMContentLoaded', () => {
-        loadSketch('js/sketch_desert.js'); // default sketch
+        loadSketch('js/sketch_desert.js', 'sketch_desert'); // default sketch
       });
     </script>
   </main>
