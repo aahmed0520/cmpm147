@@ -2,7 +2,7 @@
 "use strict";
 
 window.addEventListener("load", () => {
-  new p5((sketch) => {
+  window.p5instance = new p5((sketch) => {
     /* global XXH */
 
     window.p3_preload = function () {};
@@ -21,7 +21,6 @@ window.addEventListener("load", () => {
       sketch.noiseSeed(worldSeed);
       sketch.randomSeed(worldSeed);
       console.log("Seed set:", key);
-
     };
 
     window.p3_tileClicked = function (i, j) {
@@ -33,7 +32,6 @@ window.addEventListener("load", () => {
 
     window.p3_drawTile = function (i, j) {
       console.log("Drawing tile:", i, j);
-
       let n = sketch.noise(i * 0.1, j * 0.1);
       let rockColor = sketch.color('#8AAAB2');
       let dustColor = sketch.color('#CFCFC6');
