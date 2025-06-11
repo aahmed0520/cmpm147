@@ -1,10 +1,15 @@
 "use strict";
 
+
 /* global p5 */
 
 // Project base code provided by {amsmith,ikarth}@ucsc.edu
+console.log("engine.js loaded");
+
 
 window.engineSketch = function (sketch) {
+  console.log("engineSketch executing");
+
   let tile_width_step_main;
   let tile_height_step_main;
   let tile_rows, tile_columns;
