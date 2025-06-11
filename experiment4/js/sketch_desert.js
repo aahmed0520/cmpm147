@@ -1,5 +1,3 @@
-// js/sketch_desert.js
-
 "use strict";
 
 /* global XXH, p5 */
@@ -17,7 +15,7 @@ window.sketch_desert = function (p) {
 
   p.setup = function () {
     const container = p.select("#canvas-container");
-    let h = container.height;
+    let h = container.elt.offsetHeight;
     let canvas = p.createCanvas(container.width, h);
     canvas.parent("canvas-container");
 
@@ -212,4 +210,3 @@ window.sketch_desert = function (p) {
     rebuildWorld(p.select("#world-key-input").value());
   }
 };
-
