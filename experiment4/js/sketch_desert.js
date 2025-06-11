@@ -212,3 +212,5 @@ window.sketch_desert = function (p) {
     rebuildWorld(p.select("#world-key-input").value());
   }
 };
+
+new p5(desertSketch);
