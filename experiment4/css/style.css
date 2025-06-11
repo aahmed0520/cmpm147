@@ -10,7 +10,7 @@ body {
   }
   #canvas-container {
     width: 100%;
-    height: 600; /* or however tall you want it */
+    height: 100%; /* or however tall you want it */
     position: relative;
   }
   .minor-section:first-of-type {

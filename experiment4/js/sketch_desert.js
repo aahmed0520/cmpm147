@@ -16,7 +16,10 @@ window.preload = function () {};
 
 window.setup = function () {
   let canvasContainer = $("#canvas-container");
-  let canvas = createCanvas(canvasContainer.width(), canvasContainer.height());
+
+  // 🔧 NEW: match canvas height to the full height of the outer box
+  let height = $(".minor-section:first-of-type").height();
+  let canvas = createCanvas(canvasContainer.width(), height);
   canvas.parent("canvas-container");
 
   camera_offset = new p5.Vector(-width / 2, height / 2);
@@ -213,6 +216,7 @@ function cameraToWorldOffset([cx, cy]) {
 
 function resizeScreen() {
   let canvasContainer = $("#canvas-container");
-  resizeCanvas(canvasContainer.width(), canvasContainer.height());
+  let height = $(".minor-section:first-of-type").height(); // 🔧 match outer box again
+  resizeCanvas(canvasContainer.width(), height);
   rebuildWorld($("#canvas-container input").val());
 }
