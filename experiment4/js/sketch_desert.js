@@ -131,6 +131,6 @@ window.addEventListener("load", () => {
       sketch.text("tile " + [i, j], 0, 0);
     };
 
-    window.p3_drawAfter = function () {};
+    window.engineSketch(sketch);
   }, "canvas-container");
 });
