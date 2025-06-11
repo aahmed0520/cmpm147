@@ -6,9 +6,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/site.css" />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+    #canvas-container {
+      width: 800px;
+      height: 400px;
+      background: #222;
+    }
+  </style>
 
   <!-- JS Libraries -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
   <script src="js/xxhash.min.js"></script>
 </head>
@@ -23,10 +30,7 @@
           <button id="load-gen2">Show City</button>
           <button id="load-gen3">Show Caterpillar Crawl</button>
         </div>
-
-        <!-- Canvas target and control UI container -->
         <div id="canvas-container" class="canvas-box"></div>
-        <div id="container"></div> <!-- ✅ This is now added -->
       </div>
 
       <div class="minor-section">
@@ -54,12 +58,11 @@
 
     <script>
       let currentScript = null;
-      let p5instance = null;
 
       function unloadCurrentSketch() {
-        if (p5instance) {
-          p5instance.remove();
-          p5instance = null;
+        if (window.p5instance) {
+          window.p5instance.remove();
+          window.p5instance = null;
         }
         if (currentScript) {
           document.body.removeChild(currentScript);
@@ -72,7 +75,6 @@
       function loadSketch(scriptPath) {
         unloadCurrentSketch();
 
-        // Delay appending the sketch script slightly to ensure DOM is updated
         setTimeout(() => {
           const container = document.getElementById("canvas-container");
           if (!container) {
@@ -84,7 +86,7 @@
           currentScript.src = scriptPath;
           currentScript.onload = () => console.log("Loaded:", scriptPath);
           document.body.appendChild(currentScript);
-        }, 50); // short delay ensures DOM is stable
+        }, 50);
       }
 
       document.getElementById("load-gen1").addEventListener("click", () => {
@@ -100,7 +102,7 @@
       });
 
       window.addEventListener("DOMContentLoaded", () => {
-        loadSketch("js/sketch_desert.js"); // load first one by default
+        loadSketch("js/sketch_desert.js");
       });
     </script>
   </main>
