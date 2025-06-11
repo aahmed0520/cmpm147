@@ -17,35 +17,45 @@
     <section>
       <h1>Experiment 4 - Infinite Desert</h1>
 
-      <div class="minor-section">
-        <div id="canvas-container" class="canvas-box">
-            <div id="world-key-controls" style="margin-bottom: 10px;">
-              <label for="world-key-input">World key:</label>
-              <input id="world-key-input" type="text" value="xyzzy" />
+      <main id="content">
+        <section>
+          <h1>Experiment 4 - Infinite Desert</h1>
+      
+          <!-- 🔹 First minor-section: Canvas + World Key Input -->
+          <div class="minor-section">
+            <div id="canvas-container" class="canvas-box">
+              <div id="world-key-controls" style="margin-bottom: 10px;">
+                <label for="world-key-input">World key:</label>
+                <input id="world-key-input" type="text" value="xyzzy" />
+              </div>
             </div>
-      </div>
-
-      <div class="minor-section">
-        <h2>Description</h2>
-        <p>This generator creates an infinite desert terrain with rocky, dusty, and dune-based regions that shift based on spatial and key-based variation. The tiles respond to clicks and animate with drifting sand over time.</p>
-      </div>
-
-      <div class="minor-section">
-        <h2>Technical</h2>
-        <p>The world uses isometric tiles with height variation via noise. The terrain texture is procedurally generated, and time-based animation adds dynamic ripples to dune tiles. Each world key produces a unique yet reproducible terrain layout using xxHash.</p>
-      </div>
-
-      <div class="minor-section">
-        <h2>Reflection</h2>
-        <p>This generator was built off the Infinite Worlds project base. I extended it with height illusion, animated dunes, click-reactive pulses, and multiple tile textures. Moving it to the portfolio required blending engine.js and my_world.js into one sketch, and ensuring dynamic canvas resizing worked properly with jQuery and p5.js integration.</p>
-      </div>
-    </section>
-
-    <nav id="links" class="minor-section">
-      <ul><li><a href="../index.html">Home</a></li></ul>
-    </nav>
-
-    <script src="js/sketch_desert.js"></script>
-  </main>
+          </div>
+      
+          <!-- 🔹 Second minor-section: Description -->
+          <div class="minor-section">
+            <h2>Description</h2>
+            <p>This generator creates an infinite desert terrain...</p>
+          </div>
+      
+          <!-- 🔹 Third minor-section: Technical -->
+          <div class="minor-section">
+            <h2>Technical</h2>
+            <p>The world uses isometric tiles with height variation...</p>
+          </div>
+      
+          <!-- 🔹 Fourth minor-section: Reflection -->
+          <div class="minor-section">
+            <h2>Reflection</h2>
+            <p>This generator was built off the Infinite Worlds base...</p>
+          </div>
+        </section>
+      
+        <nav id="links" class="minor-section">
+          <ul><li><a href="../index.html">Home</a></li></ul>
+        </nav>
+      
+        <script src="js/sketch_desert.js"></script>
+      </main>
+      
 </body>
 </html>
