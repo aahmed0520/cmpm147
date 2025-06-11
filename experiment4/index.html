@@ -11,6 +11,7 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
   <script src="js/xxhash.min.js"></script>
+  <script src="js/engine.js"></script>
 </head>
 <body>
   <main id="content">
@@ -45,68 +46,58 @@
     <nav id="links" class="minor-section">
       <ul><li><a href="../index.html">Home</a></li></ul>
     </nav>
-
-    <script>
-      let currentScript = null;
-      let p5instance = null;
-
-      function unloadCurrentSketch() {
-        if (p5instance) {
-          p5instance.remove();
-          p5instance = null;
-        }
-        if (currentScript) {
-          document.body.removeChild(currentScript);
-          currentScript = null;
-        }
-        const container = document.getElementById("canvas-container");
-        if (container) container.innerHTML = "";
-      }
-
-      function loadSketch(scriptPath) {
-        unloadCurrentSketch();
-
-        // Delay appending the sketch script slightly to ensure DOM is updated
-        setTimeout(() => {
-          const container = document.getElementById("canvas-container");
-          if (!container) {
-            console.error("canvas-container not found");
-            return;
-          }
-
-          currentScript = document.createElement("script");
-          currentScript.src = scriptPath;
-          currentScript.onload = () => console.log("Loaded:", scriptPath);
-          document.body.appendChild(currentScript);
-        }, 50);
-      }
-
-      document.addEventListener("DOMContentLoaded", () => {
-        // Defer engine.js until DOM is ready
-        const engineScript = document.createElement("script");
-        engineScript.src = "js/engine.js";
-        engineScript.onload = () => {
-          // Only after engine is ready, load the default sketch
-          setTimeout(() => {
-            loadSketch("js/sketch_desert.js");
-          }, 50);
-        };
-        document.body.appendChild(engineScript);
-
-        // Attach event listeners once DOM is ready
-        document.getElementById("load-gen1").addEventListener("click", () => {
-          loadSketch("js/sketch_desert.js");
-        });
-
-        document.getElementById("load-gen2").addEventListener("click", () => {
-          loadSketch("js/sketch_city.js");
-        });
-
-        document.getElementById("load-gen3").addEventListener("click", () => {
-          loadSketch("js/sketch_caterpillar_crawl.js");
-        });
-      });
-    </script>
   </main>
+
+  <!-- ✅ Safe placement: AFTER all DOM elements exist -->
+  <script>
+    let currentScript = null;
+    let p5instance = null;
+
+    function unloadCurrentSketch() {
+      if (p5instance) {
+        p5instance.remove();
+        p5instance = null;
+      }
+      if (currentScript) {
+        document.body.removeChild(currentScript);
+        currentScript = null;
+      }
+      const container = document.getElementById("canvas-container");
+      if (container) container.innerHTML = "";
+    }
+
+    function loadSketch(scriptPath) {
+      unloadCurrentSketch();
+
+      setTimeout(() => {
+        const container = document.getElementById("canvas-container");
+        if (!container) {
+          console.error("canvas-container not found");
+          return;
+        }
+
+        currentScript = document.createElement("script");
+        currentScript.src = scriptPath;
+        currentScript.onload = () => console.log("Loaded:", scriptPath);
+        document.body.appendChild(currentScript);
+      }, 50);
+    }
+
+    document.getElementById("load-gen1").addEventListener("click", () => {
+      loadSketch("js/sketch_desert.js");
+    });
+
+    document.getElementById("load-gen2").addEventListener("click", () => {
+      loadSketch("js/sketch_city.js");
+    });
+
+    document.getElementById("load-gen3").addEventListener("click", () => {
+      loadSketch("js/sketch_caterpillar_crawl.js");
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      loadSketch("js/sketch_desert.js");
+    });
+  </script>
 </body>
 </html>
