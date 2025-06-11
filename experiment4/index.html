@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Experiment 4 - Infinite Desert</title>
+  <title>Experiment 4 - Infinite Worlds</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/site.css" />
@@ -15,10 +15,16 @@
 <body>
   <main id="content">
     <section>
-      <h1>Experiment 4 - Infinite Desert</h1>
+      <h1>Experiment 4 - Infinite Worlds</h1>
 
-      <!-- 🔹 Canvas + World Key Input -->
+      <!-- 🔹 Buttons + Canvas -->
       <div class="minor-section">
+        <div style="margin-bottom: 10px;">
+          <button id="load-desert">Show Desert</button>
+          <button id="load-critter">Show Critter</button>
+          <button id="load-city">Show City</button>
+        </div>
+
         <div id="canvas-container" class="canvas-box">
           <div id="world-key-controls" style="margin-bottom: 10px;">
             <label for="world-key-input">World key:</label>
@@ -31,8 +37,7 @@
       <div class="minor-section">
         <h2>Description</h2>
         <p>
-          Arrow keys scroll. Clicking changes tiles.<br>
-          This generator creates an infinite desert terrain using isometric tiles and procedural terrain types.
+          This project features three interactive infinite generators: a desert, a critter crawler, and a building combiner. Each can be toggled using the buttons above.
         </p>
       </div>
 
@@ -40,7 +45,7 @@
       <div class="minor-section">
         <h2>Technical</h2>
         <p>
-          The world uses noise to determine tile types (sand, rock, dust, dune) and applies animated ripple effects based on time. Clicks are tracked per tile using a timestamp. Each world is seeded using a key hashed via xxHash for repeatability.
+          Each sketch is a standalone p5 instance using seeded noise, procedural generation, and asset-free tile rendering. Clicks interact with the environment. World keys are hashed using xxHash for reproducibility.
         </p>
       </div>
 
@@ -48,20 +53,67 @@
       <div class="minor-section">
         <h2>Reflection</h2>
         <p>
-          I merged engine.js and my_world.js into one `sketch_desert.js` for my portfolio. Moving this over required layout fixes and separating the input and canvas from the description box. It now cleanly integrates into the portfolio format.
+          I separated the generators into individual engine-powered sketches and loaded them via buttons using p5 instance mode. Getting all three to work cleanly in a shared layout required isolating state, properly resetting DOM elements, and keeping the key input consistent.
         </p>
       </div>
     </section>
 
     <!-- 🔹 Navigation -->
-    <nav id="links" class="minor-section">
+    <nav class="minor-section">
       <ul>
         <li><a href="../index.html">Home</a></li>
       </ul>
     </nav>
 
-    <!-- 🔹 Your Sketch -->
-    <script src="js/sketch_desert.js"></script>
+    <!-- 🔹 Sketch Loader Script -->
+    <script>
+      let currentScript = null;
+      let p5instance = null;
+
+      function unloadCurrentSketch() {
+        if (p5instance) {
+          p5instance.remove();
+          p5instance = null;
+        }
+        if (currentScript) {
+          document.body.removeChild(currentScript);
+          currentScript = null;
+        }
+        const canvasContainer = document.getElementById("canvas-container");
+        if (canvasContainer) {
+          canvasContainer.innerHTML = `
+            <div id="world-key-controls" style="margin-bottom: 10px;">
+              <label for="world-key-input">World key:</label>
+              <input id="world-key-input" type="text" value="xyzzy" />
+            </div>
+          `;
+        }
+      }
+
+      function loadSketch(scriptPath) {
+        unloadCurrentSketch();
+        currentScript = document.createElement('script');
+        currentScript.src = scriptPath;
+        currentScript.onload = () => console.log(scriptPath + ' loaded.');
+        document.body.appendChild(currentScript);
+      }
+
+      document.getElementById('load-desert').addEventListener('click', () => {
+        loadSketch('js/sketch_desert.js');
+      });
+
+      document.getElementById('load-critter').addEventListener('click', () => {
+        loadSketch('js/sketch_critter.js');
+      });
+
+      document.getElementById('load-city').addEventListener('click', () => {
+        loadSketch('js/sketch_city.js');
+      });
+
+      window.addEventListener('DOMContentLoaded', () => {
+        loadSketch('js/sketch_desert.js'); // default sketch
+      });
+    </script>
   </main>
 </body>
 </html>
