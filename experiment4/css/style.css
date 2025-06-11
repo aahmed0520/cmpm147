@@ -19,3 +19,7 @@ body {
     flex-direction: column;
     justify-content: flex-start;
   }
+  #world-key-controls {
+    margin-bottom: 1em;
+    text-align: center;
+  }
