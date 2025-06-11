@@ -213,4 +213,3 @@ window.sketch_desert = function (p) {
   }
 };
 
-new p5(desertSketch);
