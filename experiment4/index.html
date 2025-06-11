@@ -11,8 +11,8 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.9.2/lib/p5.min.js"></script>
   <script src="js/xxhash.min.js"></script>
-  <script src="js/engine.js"></script>
 </head>
+
 <body>
   <main id="content">
     <section>
@@ -48,7 +48,9 @@
     </nav>
   </main>
 
-  <!-- ✅ Safe placement: AFTER all DOM elements exist -->
+  <!-- Scripts go LAST -->
+  <script src="js/engine.js"></script>
+
   <script>
     let currentScript = null;
     let p5instance = null;
@@ -83,19 +85,21 @@
       }, 50);
     }
 
-    document.getElementById("load-gen1").addEventListener("click", () => {
-      loadSketch("js/sketch_desert.js");
-    });
-
-    document.getElementById("load-gen2").addEventListener("click", () => {
-      loadSketch("js/sketch_city.js");
-    });
-
-    document.getElementById("load-gen3").addEventListener("click", () => {
-      loadSketch("js/sketch_caterpillar_crawl.js");
-    });
-
     window.addEventListener("DOMContentLoaded", () => {
+      // Attach button events
+      document.getElementById("load-gen1").addEventListener("click", () => {
+        loadSketch("js/sketch_desert.js");
+      });
+
+      document.getElementById("load-gen2").addEventListener("click", () => {
+        loadSketch("js/sketch_city.js");
+      });
+
+      document.getElementById("load-gen3").addEventListener("click", () => {
+        loadSketch("js/sketch_caterpillar_crawl.js");
+      });
+
+      // Load default
       loadSketch("js/sketch_desert.js");
     });
   </script>
