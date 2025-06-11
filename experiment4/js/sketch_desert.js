@@ -3,6 +3,7 @@
 
 window.addEventListener("load", () => {
   window.p5instance = new p5((sketch) => {
+    console.log("Sketch Desert p5 instance created");
     /* global XXH */
 
     window.p3_preload = function () {};
