@@ -46,7 +46,11 @@ function getInspirations() {
         size: random(10, 40),
         angle: random(TWO_PI),
         shape: random(["circle", "triangle", "square"]),
-        fill: inspiration.name === "Pikachu" ? color(255, 220, 0) : color(0)
+        fill: {
+            r: inspiration.name === "Pikachu" ? 255 : 0,
+            g: inspiration.name === "Pikachu" ? 220 : 0,
+            b: inspiration.name === "Pikachu" ? 0 : 0
+          }
       });
     }
   
@@ -61,7 +65,8 @@ function getInspirations() {
       push();
       translate(elem.x, elem.y);
       rotate(elem.angle);
-      fill(elem.fill);
+      fill(elem.fill.r, elem.fill.g, elem.fill.b);
+
   
       if (elem.shape === "circle") {
         ellipse(0, 0, elem.size, elem.size);
@@ -87,16 +92,11 @@ function getInspirations() {
       elem.size = mut(elem.size, 10, 100, rate);
       elem.angle = mut(elem.angle, 0, TWO_PI, rate);
   
+      // Mutate fill color if Pikachu
       if (inspiration.name === "Pikachu") {
-        // Slightly mutate Pikachu’s color
-        let r = red(elem.fill);
-        let g = green(elem.fill);
-        let b = blue(elem.fill);
-        elem.fill = color(
-          mut(r, 200, 255, rate),
-          mut(g, 180, 240, rate),
-          mut(b, 0, 40, rate)
-        );
+        elem.fill.r = mut(elem.fill.r, 200, 255, rate);
+        elem.fill.g = mut(elem.fill.g, 180, 240, rate);
+        elem.fill.b = mut(elem.fill.b, 0, 40, rate);
       }
     }
   }
