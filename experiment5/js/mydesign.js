@@ -4,24 +4,19 @@
 function getInspirations() {
     return [
       {
-        name: "Lunch atop a Skyscraper", 
+        name: "Naruto", 
         assetUrl: "img/Naruto.jpg",
         credit: "Lunch atop a Skyscraper, Charles Clyde Ebbets, 1932"
       },
       {
-        name: "Train Wreck", 
+        name: "Pikachu", 
         assetUrl: "img/pikachu.jpg.svg",
         credit: "Train Wreck At Monteparnasse, Levy & fils, 1895"
       },
       {
-        name: "Migrant mother", 
+        name: "Pokeball", 
         assetUrl: "img/pokeball.webp",
         credit: "Migrant Mother near Nipomo, California, Dorothea Lange, 1936"
-      },
-      {
-        name: "Disaster Girl", 
-        assetUrl: "img/Naruto.jpg",
-        credit: "Four-year-old Zoë Roth, 2005"
       },
     ];
   }
