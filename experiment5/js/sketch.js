@@ -40,8 +40,8 @@ function inspirationChanged(nextInspiration) {
 
 function setup() {
     // Resize canvas to match the original image size
-    let canvasContainer = $('.image-container'); // jQuery selection
-    let canvasWidth = canvasContainer.width();   // container width
+    let canvasContainer = $('.image-container');
+    let canvasWidth = canvasContainer.width();
     let aspectRatio = currentInspiration.image.height / currentInspiration.image.width;
     let canvasHeight = canvasWidth * aspectRatio;
   
@@ -49,24 +49,32 @@ function setup() {
     currentCanvas = createCanvas(canvasWidth, canvasHeight);
     currentCanvas.parent(document.getElementById("active"));
   
-    // ✨ Insert original image directly into #original using jQuery
-    const imgHTML = `<img src="${currentInspiration.assetUrl}" style="width:${canvasWidth}px;">`;
+    // ✨ Set individual image display size per inspiration
+    let imageScale = 1.0;
+  
+    if (currentInspiration.name === "Naruto") {
+      imageScale = 0.7;
+    } else if (currentInspiration.name === "Pokeball") {
+      imageScale = 0.85;
+    } else if (currentInspiration.name === "Pikachu") {
+      imageScale = 0.9;
+    }
+  
+    const imgHTML = `<img src="${currentInspiration.assetUrl}" style="width:${canvasWidth * imageScale}px;">`;
     $('#original').empty();
     $('#original').append(imgHTML);
   
-    // Optional caption (only if you want to show credits below)
     $(".caption").text(currentInspiration.credit);
   
-    // Initialize design
     currentScore = Number.NEGATIVE_INFINITY;
     currentDesign = initDesign(currentInspiration);
     bestDesign = currentDesign;
   
-    // Set up for comparison
     image(currentInspiration.image, 0, 0, width, height);
     loadPixels();
     currentInspirationPixels = pixels;
   }
+  
   
 
 function evaluate() {
