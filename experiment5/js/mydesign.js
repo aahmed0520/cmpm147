@@ -59,15 +59,19 @@ function getInspirations() {
         }
   
       } else if (inspiration.name === "Naruto") {
-        // Blend of Naruto-inspired color zones
+        // Naruto colors only
         let palette = [
-          { r: 255, g: 165, b: 0 },   // orange
+          { r: 255, g: 140, b: 0 },   // orange
+          { r: 20, g: 20, b: 20 },    // black
           { r: 240, g: 200, b: 160 }, // skin
-          { r: 50, g: 50, b: 50 },    // black/dark gray
-          { r: 170, g: 170, b: 170 }, // silver
-          { r: 30, g: 120, b: 200 }   // blue
+          { r: 255, g: 225, b: 0 }    // yellow hair
         ];
         fill = random(palette);
+  
+        // Focused center layout
+        x = random(width * 0.3, width * 0.7);
+        y = random(height * 0.2, height * 0.9);
+        shape = random(["square", "triangle"]);
       }
   
       design.elements.push({ x, y, size, angle, shape, fill });
@@ -134,9 +138,14 @@ function getInspirations() {
       }
   
       if (inspiration.name === "Naruto") {
-        elem.fill.r = mut(elem.fill.r, 30, 255, rate);
-        elem.fill.g = mut(elem.fill.g, 30, 220, rate);
-        elem.fill.b = mut(elem.fill.b, 30, 210, rate);
+        // Keep colors close to palette tones
+        elem.fill.r = mut(elem.fill.r, 20, 255, rate * 0.6);
+        elem.fill.g = mut(elem.fill.g, 20, 225, rate * 0.6);
+        elem.fill.b = mut(elem.fill.b, 0, 180, rate * 0.6);
+  
+        // Keep form centered
+        elem.x = mut(elem.x, width * 0.3, width * 0.7, rate);
+        elem.y = mut(elem.y, height * 0.2, height * 0.9, rate);
       }
     }
   }
