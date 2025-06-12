@@ -10,17 +10,17 @@ function getInspirations() {
   return [
     {
       name: "Pokeball",
-      assetUrl: "assets/pokeball.webp",
+      assetUrl: "img/pokeball.webp",
       credit: "Pokémon"
     },
     {
       name: "Naruto",
-      assetUrl: "assets/Naruto.jpg",
+      assetUrl: "img/Naruto.jpg",
       credit: "Masashi Kishimoto"
     },
     {
       name: "Pikachu",
-      assetUrl: "assets/pikachu.jpg.svg",
+      assetUrl: "img/pikachu.jpg.svg",
       credit: "Pokémon"
     }
   ];
