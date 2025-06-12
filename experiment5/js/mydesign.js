@@ -83,4 +83,25 @@ function renderDesign(design, inspiration) {
 
     pop();
   }
+  function mutateDesign(design, inspiration, rate) {
+    // rate is from 0.01 to 1.0 (slider)
+    let mutationAmount = rate / 100;
+  
+    for (let elem of design.elements) {
+      // Slightly move positions
+      elem.x = mut(elem.x, 0, width, mutationAmount);
+      elem.y = mut(elem.y, 0, height, mutationAmount);
+  
+      // Slightly change size
+      elem.size = mut(elem.size, 10, 100, mutationAmount);
+  
+      // Slightly change angle
+      elem.angle = mut(elem.angle, 0, TWO_PI, mutationAmount);
+    }
+  }
+  
+  // Gaussian mutation helper
+  function mut(num, min, max, rate) {
+    return constrain(randomGaussian(num, (rate * (max - min)) / 20), min, max);
+  }
 }
