@@ -1,4 +1,4 @@
-// sketch.js - purpose and description here
+// sketch.js - Evolutionary Generator Controller
 // Author: Your Name
 // Date:
 
@@ -13,7 +13,6 @@ let currentCanvas;
 let currentInspirationPixels;
 
 function preload() {
-  
   let allInspirations = getInspirations();
 
   for (let i = 0; i < allInspirations.length; i++) {
@@ -24,7 +23,7 @@ function preload() {
     option.innerHTML = insp.name;
     dropper.appendChild(option);
   }
-  
+
   dropper.onchange = e => inspirationChanged(allInspirations[e.target.value]);
   currentInspiration = allInspirations[0];
 
@@ -40,12 +39,23 @@ function inspirationChanged(nextInspiration) {
 }
 
 function setup() {
-  currentCanvas = createCanvas(width, height);
+  // Create canvas for active image
+  currentCanvas = createCanvas(currentInspiration.image.width / 4, currentInspiration.image.height / 4);
   currentCanvas.parent(document.getElementById("active"));
+
+  // Display original image in left container
+  let originalCanvas = createGraphics(width, height);
+  originalCanvas.image(currentInspiration.image, 0, 0, width, height);
+  document.getElementById("original").innerHTML = "";
+  document.getElementById("original").appendChild(originalCanvas.canvas);
+
+  // Prepare design logic
   currentScore = Number.NEGATIVE_INFINITY;
   currentDesign = initDesign(currentInspiration);
   bestDesign = currentDesign;
-  image(currentInspiration.image, 0,0, width, height);
+
+  // Use original image pixels for evaluation reference
+  image(currentInspiration.image, 0, 0, width, height);
   loadPixels();
   currentInspirationPixels = pixels;
 }
@@ -55,11 +65,12 @@ function evaluate() {
 
   let error = 0;
   let n = pixels.length;
-  
+
   for (let i = 0; i < n; i++) {
     error += sq(pixels[i] - currentInspirationPixels[i]);
   }
-  return 1/(1+error/n);
+
+  return 1 / (1 + error / n);
 }
 
 function memorialize() {
@@ -69,15 +80,16 @@ function memorialize() {
   img.classList.add("memory");
   img.src = url;
   img.width = width;
-  img.heigh = height;
+  img.height = height;
   img.title = currentScore;
 
+  // Update best image slot
   document.getElementById("best").innerHTML = "";
   document.getElementById("best").appendChild(img.cloneNode());
 
+  // Also add to memory history
   img.width = width / 2;
   img.height = height / 2;
-
   memory.insertBefore(img, memory.firstChild);
 
   if (memory.childNodes.length > memory.dataset.maxItems) {
@@ -88,25 +100,26 @@ function memorialize() {
 let mutationCount = 0;
 
 function draw() {
-  
-  if(!currentDesign) {
-    return;
-  }
+  if (!currentDesign) return;
+
   randomSeed(mutationCount++);
   currentDesign = JSON.parse(JSON.stringify(bestDesign));
+
   rate.innerHTML = slider.value;
-  mutateDesign(currentDesign, currentInspiration, slider.value/100.0);
-  
+  mutateDesign(currentDesign, currentInspiration, slider.value / 100.0);
+
   randomSeed(0);
   renderDesign(currentDesign, currentInspiration);
+
   let nextScore = evaluate();
   activeScore.innerHTML = nextScore;
+
   if (nextScore > currentScore) {
     currentScore = nextScore;
     bestDesign = currentDesign;
     memorialize();
     bestScore.innerHTML = currentScore;
   }
-  
+
   fpsCounter.innerHTML = Math.round(frameRate());
 }
