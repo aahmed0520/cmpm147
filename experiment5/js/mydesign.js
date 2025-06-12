@@ -34,24 +34,19 @@ function getInspirations() {
       elements: []
     };
   
-    if (inspiration.name === "Pokeball") {
-      design.shape = "circle";
-      design.count = 10;
-    } else if (inspiration.name === "Naruto") {
-      design.shape = "line";
-      design.count = 20;
-    } else if (inspiration.name === "Pikachu") {
-      design.shape = "triangle";
-      design.shape = 'circle';
-      design.count = 15;
-    }
+    let count = 20;
+    if (inspiration.name === "Pokeball") count = 10;
+    if (inspiration.name === "Naruto") count = 25;
+    if (inspiration.name === "Pikachu") count = 40;
   
-    for (let i = 0; i < design.count; i++) {
+    for (let i = 0; i < count; i++) {
       design.elements.push({
         x: random(width),
         y: random(height),
-        size: random(10, 50),
-        angle: random(TWO_PI)
+        size: random(10, 40),
+        angle: random(TWO_PI),
+        shape: random(["circle", "triangle", "square"]),
+        fill: inspiration.name === "Pikachu" ? color(255, 220, 0) : color(0)
       });
     }
   
@@ -61,38 +56,48 @@ function getInspirations() {
   function renderDesign(design, inspiration) {
     background(255);
     noStroke();
-    fill(0);
   
     for (let elem of design.elements) {
       push();
       translate(elem.x, elem.y);
       rotate(elem.angle);
+      fill(elem.fill);
   
-      if (design.shape === "circle") {
+      if (elem.shape === "circle") {
         ellipse(0, 0, elem.size, elem.size);
-      } else if (design.shape === "line") {
-        stroke(0);
-        line(-elem.size / 2, 0, elem.size / 2, 0);
-        noStroke();
-      } else if (design.shape === "triangle") {
+      } else if (elem.shape === "triangle") {
         triangle(
           -elem.size / 2, elem.size / 2,
           0, -elem.size / 2,
           elem.size / 2, elem.size / 2
         );
+      } else if (elem.shape === "square") {
+        rectMode(CENTER);
+        rect(0, 0, elem.size, elem.size);
       }
   
       pop();
     }
   }
   
-  // ✅ These MUST be OUTSIDE renderDesign
   function mutateDesign(design, inspiration, rate) {
     for (let elem of design.elements) {
       elem.x = mut(elem.x, 0, width, rate);
       elem.y = mut(elem.y, 0, height, rate);
       elem.size = mut(elem.size, 10, 100, rate);
       elem.angle = mut(elem.angle, 0, TWO_PI, rate);
+  
+      if (inspiration.name === "Pikachu") {
+        // Slightly mutate Pikachu’s color
+        let r = red(elem.fill);
+        let g = green(elem.fill);
+        let b = blue(elem.fill);
+        elem.fill = color(
+          mut(r, 200, 255, rate),
+          mut(g, 180, 240, rate),
+          mut(b, 0, 40, rate)
+        );
+      }
     }
   }
   
