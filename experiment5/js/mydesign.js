@@ -34,47 +34,37 @@ function getInspirations() {
       elements: []
     };
   
-    let count = 20;
-    if (inspiration.name === "Pokeball") count = 40;
-    if (inspiration.name === "Naruto") count = 25;
-    if (inspiration.name === "Pikachu") count = 40;
+    let count = 40;
   
     for (let i = 0; i < count; i++) {
-      if (inspiration.name === "Pokeball") {
-        let y = random(height);
-        let fillColor;
+      let x = random(width);
+      let y = random(height);
+      let shape = random(["circle", "square"]);
+      let size = random(10, 40);
+      let angle = random(TWO_PI);
+      let fill = { r: 0, g: 0, b: 0 };
   
+      if (inspiration.name === "Pikachu") {
+        fill = { r: 255, g: 220, b: 0 };
+  
+      } else if (inspiration.name === "Pokeball") {
+        // Top half red
         if (y < height / 2 - 10) {
-          fillColor = { r: 220, g: 0, b: 0 }; // red top
-        } else if (y > height / 2 + 10) {
-          fillColor = { r: 255, g: 255, b: 255 }; // white bottom
-        } else {
-          fillColor = { r: 0, g: 0, b: 0 }; // black middle band
+          fill = { r: 230, g: 0, b: 0 };
         }
-  
-        design.elements.push({
-          x: random(width),
-          y: y,
-          size: random(10, 40),
-          angle: 0,
-          shape: random(["circle", "square"]),
-          fill: fillColor
-        });
-  
-      } else {
-        design.elements.push({
-          x: random(width),
-          y: random(height),
-          size: random(10, 40),
-          angle: random(TWO_PI),
-          shape: random(["circle", "triangle", "square"]),
-          fill: {
-            r: inspiration.name === "Pikachu" ? 255 : 0,
-            g: inspiration.name === "Pikachu" ? 220 : 0,
-            b: inspiration.name === "Pikachu" ? 0 : 0
-          }
-        });
+        // Bottom half white
+        else if (y > height / 2 + 10) {
+          fill = { r: 255, g: 255, b: 255 };
+        }
+        // Center band black
+        else {
+          fill = { r: 20, g: 20, b: 20 };
+          shape = "square"; // mostly black band is flat-ish
+          size = random(10, 30);
+        }
       }
+  
+      design.elements.push({ x, y, size, angle, shape, fill });
     }
   
     return design;
@@ -121,9 +111,20 @@ function getInspirations() {
       }
   
       if (inspiration.name === "Pokeball") {
-        elem.fill.r = mut(elem.fill.r, 0, 255, rate);
-        elem.fill.g = mut(elem.fill.g, 0, 255, rate);
-        elem.fill.b = mut(elem.fill.b, 0, 255, rate);
+        let y = elem.y;
+        if (y < height / 2 - 10) {
+          elem.fill.r = mut(elem.fill.r, 200, 255, rate);
+          elem.fill.g = mut(elem.fill.g, 0, 50, rate);
+          elem.fill.b = mut(elem.fill.b, 0, 50, rate);
+        } else if (y > height / 2 + 10) {
+          elem.fill.r = mut(elem.fill.r, 240, 255, rate);
+          elem.fill.g = mut(elem.fill.g, 240, 255, rate);
+          elem.fill.b = mut(elem.fill.b, 240, 255, rate);
+        } else {
+          elem.fill.r = mut(elem.fill.r, 0, 50, rate);
+          elem.fill.g = mut(elem.fill.g, 0, 50, rate);
+          elem.fill.b = mut(elem.fill.b, 0, 50, rate);
+        }
       }
     }
   }
