@@ -39,26 +39,35 @@ function inspirationChanged(nextInspiration) {
 }
 
 function setup() {
-  // Create canvas for active image
-  currentCanvas = createCanvas(currentInspiration.image.width / 4, currentInspiration.image.height / 4);
-  currentCanvas.parent(document.getElementById("active"));
-
-  // Display original image in left container
-  let originalCanvas = createGraphics(width, height);
-  originalCanvas.image(currentInspiration.image, 0, 0, width, height);
-  document.getElementById("original").innerHTML = "";
-  document.getElementById("original").appendChild(originalCanvas.canvas);
-
-  // Prepare design logic
-  currentScore = Number.NEGATIVE_INFINITY;
-  currentDesign = initDesign(currentInspiration);
-  bestDesign = currentDesign;
-
-  // Use original image pixels for evaluation reference
-  image(currentInspiration.image, 0, 0, width, height);
-  loadPixels();
-  currentInspirationPixels = pixels;
-}
+    // Resize canvas to match the original image size
+    let canvasContainer = $('.image-container'); // jQuery selection
+    let canvasWidth = canvasContainer.width();   // container width
+    let aspectRatio = currentInspiration.image.height / currentInspiration.image.width;
+    let canvasHeight = canvasWidth * aspectRatio;
+  
+    resizeCanvas(canvasWidth, canvasHeight);
+    currentCanvas = createCanvas(canvasWidth, canvasHeight);
+    currentCanvas.parent(document.getElementById("active"));
+  
+    // ✨ Insert original image directly into #original using jQuery
+    const imgHTML = `<img src="${currentInspiration.assetUrl}" style="width:${canvasWidth}px;">`;
+    $('#original').empty();
+    $('#original').append(imgHTML);
+  
+    // Optional caption (only if you want to show credits below)
+    $(".caption").text(currentInspiration.credit);
+  
+    // Initialize design
+    currentScore = Number.NEGATIVE_INFINITY;
+    currentDesign = initDesign(currentInspiration);
+    bestDesign = currentDesign;
+  
+    // Set up for comparison
+    image(currentInspiration.image, 0, 0, width, height);
+    loadPixels();
+    currentInspirationPixels = pixels;
+  }
+  
 
 function evaluate() {
   loadPixels();
