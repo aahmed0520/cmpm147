@@ -42,6 +42,7 @@ function getInspirations() {
       design.count = 20;
     } else if (inspiration.name === "Pikachu") {
       design.shape = "triangle";
+      design.shape = 'circle';
       design.count = 15;
     }
   
