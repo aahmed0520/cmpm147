@@ -5,7 +5,7 @@ function getInspirations() {
     return [
       {
         name: "Lunch atop a Skyscraper", 
-        assetUrl: "img/naruto.jpg",
+        assetUrl: "img/Naruto.jpg",
         credit: "Lunch atop a Skyscraper, Charles Clyde Ebbets, 1932"
       },
       {
@@ -20,7 +20,7 @@ function getInspirations() {
       },
       {
         name: "Disaster Girl", 
-        assetUrl: "img/girl-with-fire.jpg",
+        assetUrl: "img/Naruto.jpg",
         credit: "Four-year-old Zoë Roth, 2005"
       },
     ];
