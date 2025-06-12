@@ -53,7 +53,7 @@ function setup() {
     let imageScale = 1.0;
   
     if (currentInspiration.name === "Naruto") {
-      imageScale = 0.7;
+      imageScale = 0.3;
     } else if (currentInspiration.name === "Pokeball") {
       imageScale = 0.85;
     } else if (currentInspiration.name === "Pikachu") {
